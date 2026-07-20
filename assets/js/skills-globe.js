@@ -731,9 +731,20 @@ function renderLightGlobe(mount) {
     return { frags: frags, segs: segs, HW: HW, HH: HH };
   })();
 
-  // timed cycle: intact (seams creep in) -> shatter -> gone -> reform -> repeat
-  var lkPhase = "intact", lkT = 0, lkHold = 4000 + Math.random() * 3000;
-  var INTACT_SEAM = 2600, SHAT = 700, GONE = 700, REFORM = 950;
+  // Strike-driven cycle, like the desktop lock: an icon flies in, hits, and each hit opens one
+  // crack; the last hit shatters it. Then it flies apart, hangs, and reforms.
+  //   idle -> strike (icon in, hit, icon out) x5 -> shatter -> gone -> reform -> idle
+  var lkPhase = "idle", lkT = 0, nextStrike = 1600 + Math.random() * 1600;
+  var damage = 0, MAXHIT = 5;
+  var attacker = -1, strikeU = 0, hitDone = false;
+  var IN = 300, OUT = 440, SHAT = 850, GONE = 1500, REFORM = 1100;
+  var lkLx = 0, lkLy = 0, shakeAmt = 0;         // lock screen centre (for the icon's path) + hit shake
+
+  function pickFrontNode() {
+    var pool = [];
+    for (var i = 0; i < nodes.length; i++) if (parseFloat(nodes[i].lastOp || 0) > 0.6) pool.push(i);
+    return pool.length ? pool[(Math.random() * pool.length) | 0] : -1;
+  }
 
   var BASE = 0.008;
   var angY = 0, angX = -0.32, velY = BASE, velX = 0;
@@ -779,12 +790,31 @@ function renderLightGlobe(mount) {
     prevT = t;
     last = t;
 
-    // advance the lock's break/reform cycle
+    // advance the lock's strike / break / reform cycle
     lkT += dt;
-    if (lkPhase === "intact") { if (lkT > lkHold) { lkPhase = "shatter"; lkT = 0; } }
-    else if (lkPhase === "shatter") { if (lkT > SHAT) { lkPhase = "gone"; lkT = 0; } }
+    if (shakeAmt > 0) shakeAmt = Math.max(0, shakeAmt - dt / 220);
+    if (lkPhase === "idle") {
+      nextStrike -= dt;
+      if (nextStrike <= 0) {
+        var a = pickFrontNode();
+        if (a >= 0) { attacker = a; strikeU = 0; hitDone = false; lkPhase = "strike"; lkT = 0; }
+        else nextStrike = 300;                   // nothing in front yet; look again shortly
+      }
+    } else if (lkPhase === "strike") {
+      strikeU = lkT / (IN + OUT);
+      if (!hitDone && lkT >= IN) {               // contact
+        hitDone = true;
+        damage = Math.min(MAXHIT, damage + 1);
+        shakeAmt = 1;
+        if (damage >= MAXHIT) { attacker = -1; lkPhase = "shatter"; lkT = 0; }
+      } else if (lkT >= IN + OUT) {              // icon returned
+        attacker = -1; lkPhase = "idle"; lkT = 0; nextStrike = 900 + Math.random() * 1100;
+      }
+    } else if (lkPhase === "shatter") { if (lkT > SHAT) { lkPhase = "gone"; lkT = 0; } }
     else if (lkPhase === "gone") { if (lkT > GONE) { lkPhase = "reform"; lkT = 0; } }
-    else if (lkPhase === "reform") { if (lkT > REFORM) { lkPhase = "intact"; lkT = 0; lkHold = 5000 + Math.random() * 4000; } }
+    else if (lkPhase === "reform") {
+      if (lkT > REFORM) { lkPhase = "idle"; lkT = 0; damage = 0; nextStrike = 1400 + Math.random() * 1600; }
+    }
     if (!dragging) {
       angY += velY; angX += velX;
       velY += (BASE - velY) * 0.03; // ease back to gentle auto-rotate
@@ -808,6 +838,11 @@ function renderLightGlobe(mount) {
     // the icons for attention — and it breaks along real seams on a slow cycle (see lkPhase).
     var S = R * 0.42;
     var lx = cx, ly = cy + S * 0.10;                     // lock centre
+    lkLx = lx; lkLy = ly;                                // remembered for the icon's flight path
+    if (shakeAmt > 0) {                                  // knock the lock on each hit
+      lx += (Math.random() - 0.5) * S * 0.12 * shakeAmt;
+      ly += (Math.random() - 0.5) * S * 0.12 * shakeAmt;
+    }
     var bh = S * 0.95, top = ly - bh / 2;
     var shackleTop = top - S * 0.22;
 
@@ -832,7 +867,7 @@ function renderLightGlobe(mount) {
     wctx.restore();
 
     var BODY = "rgba(168,85,247,0.13)", EDGE = "rgba(168,85,247,0.34)";
-    if (lkPhase === "intact") {
+    if (lkPhase === "idle" || lkPhase === "strike") {   // whole while it is being struck; fragments only once it breaks
       // whole body, with seams creeping in over the first part of the intact stretch
       var r = S * 0.14, bw = S * 1.15;
       wctx.fillStyle = BODY; wctx.strokeStyle = EDGE; wctx.lineWidth = Math.max(1, S * 0.06);
@@ -846,8 +881,8 @@ function renderLightGlobe(mount) {
       wctx.fillStyle = "rgba(13,10,20,0.85)";
       wctx.beginPath(); wctx.arc(lx, ly + bh * 0.10, S * 0.11, 0, Math.PI * 2); wctx.fill();
       wctx.fillRect(lx - S * 0.045, ly + bh * 0.10, S * 0.09, bh * 0.34);
-      var reveal = Math.min(1, lkT / INTACT_SEAM);
-      var shown = Math.floor(reveal * LK.segs.length);
+      // one more group of seams per hit — the cracks appear as it is struck, not up front
+      var shown = Math.floor((damage / MAXHIT) * LK.segs.length);
       wctx.strokeStyle = "rgba(240,171,252,0.5)"; wctx.lineWidth = Math.max(1, S * 0.03);
       wctx.beginPath();
       for (var si = 0; si < shown; si++) {
@@ -895,8 +930,18 @@ function renderLightGlobe(mount) {
       var op = Math.max(0, Math.min(1, (z2 + 1.1) / 1.7));        // depth -> opacity
       // Position purely with transform: writing left/top every frame forced a full layout pass for
       // every node, which is what made dragging feel heavy on phones.
+      var px = cx + x1 * R, py = cy + y2 * R;
+      if (i === attacker) {
+        // dart toward the lock and back: 0 at the ends, contact near the middle
+        var bl = Math.sin(Math.min(1, strikeU) * Math.PI);
+        bl = bl * bl * 0.92;                              // sharpen the approach
+        px += (lkLx - px) * bl;
+        py += (lkLy - py) * bl;
+        sc *= 1 + bl * 0.15;
+        op = 1;
+      }
       n.el.style.transform =
-        "translate3d(" + (cx + x1 * R).toFixed(1) + "px," + (cy + y2 * R).toFixed(1) + "px,0)" +
+        "translate3d(" + px.toFixed(1) + "px," + py.toFixed(1) + "px,0)" +
         " translate(-50%,-50%) scale(" + sc.toFixed(3) + ")";
       var opS = op.toFixed(2);
       if (opS !== n.lastOp) { n.el.style.opacity = opS; n.lastOp = opS; }
