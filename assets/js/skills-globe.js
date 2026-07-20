@@ -658,6 +658,44 @@ function renderStatic(mount) {
   if (caption) caption.style.display = "none"; // static grid: nothing to drag
 }
 
+function buildGeodesic(detail) {
+  var t = (1 + Math.sqrt(5)) / 2;
+  var base = [[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t],
+              [0, -1, -t], [0, 1, -t], [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]];
+  var faces = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4],
+               [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8],
+               [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]];
+  function lerp(p, q, s) { return [p[0] + (q[0] - p[0]) * s, p[1] + (q[1] - p[1]) * s, p[2] + (q[2] - p[2]) * s]; }
+  function norm(p) { var l = Math.sqrt(p[0] * p[0] + p[1] * p[1] + p[2] * p[2]); return [p[0] / l, p[1] / l, p[2] / l]; }
+  var verts = [], vmap = {}, edges = {}, cols = detail + 1;
+  function addV(p) {
+    var n = norm(p), k = n[0].toFixed(3) + "," + n[1].toFixed(3) + "," + n[2].toFixed(3);
+    if (vmap[k] === undefined) { vmap[k] = verts.length; verts.push(n); }
+    return vmap[k];
+  }
+  function addE(i, j) { if (i !== j) edges[Math.min(i, j) + "_" + Math.max(i, j)] = [Math.min(i, j), Math.max(i, j)]; }
+  faces.forEach(function (f) {
+    var a = base[f[0]], b = base[f[1]], c = base[f[2]], grid = [];
+    for (var i = 0; i <= cols; i++) {
+      grid[i] = [];
+      var aj = lerp(a, c, i / cols), bj = lerp(b, c, i / cols), rows = cols - i;
+      for (var j = 0; j <= rows; j++) grid[i][j] = rows === 0 ? addV(aj) : addV(lerp(aj, bj, j / rows));
+    }
+    for (var i = 0; i < cols; i++) {
+      for (var j = 0; j < 2 * (cols - i) - 1; j++) {
+        var k = Math.floor(j / 2), v1, v2, v3;
+        if (j % 2 === 0) { v1 = grid[i][k + 1]; v2 = grid[i + 1][k]; v3 = grid[i][k]; }
+        else { v1 = grid[i][k + 1]; v2 = grid[i + 1][k + 1]; v3 = grid[i + 1][k]; }
+        addE(v1, v2); addE(v2, v3); addE(v3, v1);
+      }
+    }
+  });
+  return { verts: verts, edges: Object.keys(edges).map(function (k) { return edges[k]; }) };
+}
+
+// Light globe — a real rotating 3D icon sphere built from plain DOM nodes projected by hand
+// (fibonacci distribution + Y/X rotation + perspective scale). ~31 nodes, no WebGL, no Three.js:
+// the phone downloads nothing extra and the loop is cheap. Drag horizontally to spin.
 function renderLightGlobe(mount) {
   var skills = shuffle(SKILLS);
   var N = skills.length;
@@ -680,77 +718,20 @@ function renderLightGlobe(mount) {
   });
   mount.appendChild(container);
 
-  // A flat padlock behind the icons, so the phone version says what the desktop one says. There is
-  // no strike cycle here — on a small screen the icons orbiting a lock carries the idea, and a
-  // second animated system would cost more than it's worth.
+  // Wireframe cage: an icosahedron (12 verts, 30 edges) drawn on a light canvas behind the icons,
+  // rotating with them — same shape the desktop WebGL globe uses, at a fraction of the cost.
   var wire = document.createElement("canvas");
   wire.className = "lg-wire";
   container.insertBefore(wire, container.firstChild);
   var wctx = wire.getContext("2d");
   var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-  var wsize = -1;                       // cached canvas size, so it is only resized when it changes
-  // (cage removed with the globe; the lock below is drawn directly)
+  // detail 2 is the desktop-matching dense cage (~480 edges); phones use detail 1 (~120), which is
   // the difference between a laggy drag and a smooth one.
-
-  /* The lock's fracture, in local units where 1 = S (the lock scale computed each frame). Carved
-   * into a handful of Voronoi cells so it breaks along real seams, same idea as the desktop lock
-   * but flat. Built once; scaled to the canvas at draw time. */
-  var LK = (function () {
-    var HW = 0.575, HH = 0.475;                 // body half-extents in S-units (bw/2, bh/2)
-    function clip(poly, ax, ay, bx, by) {
-      var mx = (ax + bx) / 2, my = (ay + by) / 2, nx = ax - bx, ny = ay - by, out = [];
-      for (var i = 0; i < poly.length; i++) {
-        var p = poly[i], q = poly[(i + 1) % poly.length];
-        var dp = (p[0] - mx) * nx + (p[1] - my) * ny;
-        var dq = (q[0] - mx) * nx + (q[1] - my) * ny;
-        if (dp >= 0) out.push(p);
-        if ((dp >= 0) !== (dq >= 0)) { var t = dp / (dp - dq);
-          out.push([p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t]); }
-      }
-      return out;
-    }
-    var seeds = [];
-    for (var i = 0; i < 7; i++) seeds.push([(Math.random() - 0.5) * HW * 1.7, (Math.random() - 0.5) * HH * 1.7]);
-    var rect = [[-HW, -HH], [HW, -HH], [HW, HH], [-HW, HH]];
-    var frags = [];
-    for (var s = 0; s < seeds.length; s++) {
-      var poly = rect;
-      for (var j = 0; j < seeds.length; j++) if (s !== j) poly = clip(poly, seeds[s][0], seeds[s][1], seeds[j][0], seeds[j][1]);
-      if (poly.length < 3) continue;
-      var cx0 = 0, cy0 = 0;
-      for (var k = 0; k < poly.length; k++) { cx0 += poly[k][0]; cy0 += poly[k][1]; }
-      cx0 /= poly.length; cy0 /= poly.length;
-      var d = Math.hypot(cx0, cy0) || 1;
-      frags.push({ poly: poly, cx: cx0, cy: cy0,
-        dx: cx0 / d, dy: cy0 / d - 0.2, rot: (Math.random() - 0.5) * 2, reach: 0.7 + Math.random() * 0.7 });
-    }
-    // unique seams (cell borders), for the crack lines that appear before it breaks
-    var segs = [], seen = {};
-    for (var f = 0; f < frags.length; f++) {
-      var pl = frags[f].poly;
-      for (var e = 0; e < pl.length; e++) {
-        var a = pl[e], c = pl[(e + 1) % pl.length];
-        var key = [a[0], a[1], c[0], c[1]].map(function (v) { return v.toFixed(2); }).sort().join();
-        if (seen[key]) continue; seen[key] = 1; segs.push([a, c]);
-      }
-    }
-    return { frags: frags, segs: segs, HW: HW, HH: HH };
-  })();
-
-  // Strike-driven cycle, like the desktop lock: an icon flies in, hits, and each hit opens one
-  // crack; the last hit shatters it. Then it flies apart, hangs, and reforms.
-  //   idle -> strike (icon in, hit, icon out) x5 -> shatter -> gone -> reform -> idle
-  var lkPhase = "idle", lkT = 0, nextStrike = 1600 + Math.random() * 1600;
-  var damage = 0, MAXHIT = 5;
-  var attacker = -1, strikeU = 0, hitDone = false;
-  var IN = 300, OUT = 440, SHAT = 850, GONE = 1500, REFORM = 1100;
-  var lkLx = 0, lkLy = 0, shakeAmt = 0;         // lock screen centre (for the icon's path) + hit shake
-
-  function pickFrontNode() {
-    var pool = [];
-    for (var i = 0; i < nodes.length; i++) if (parseFloat(nodes[i].lastOp || 0) > 0.6) pool.push(i);
-    return pool.length ? pool[(Math.random() * pool.length) | 0] : -1;
-  }
+  var geo = buildGeodesic(window.matchMedia("(min-width: 768px)").matches ? 2 : 1);
+  var wv = geo.verts, wedges = geo.edges;
+  var wsize = 0;
+  var wproj = wv.map(function () { return { x: 0, y: 0, z: 0 }; }); // reused each frame, no allocation
+  var EDGE_BUCKETS = 5;                                             // edges batched by depth/opacity
 
   var BASE = 0.008;
   var angY = 0, angX = -0.32, velY = BASE, velX = 0;
@@ -787,40 +768,12 @@ function renderLightGlobe(mount) {
     pageVisible = !document.hidden;
   });
 
-  var last = 0, prevT = 0;
+  var last = 0;
   function frame(t) {
     requestAnimationFrame(frame);
     if (!onScreen || !pageVisible) return;  // idle while off-screen or in a background tab
     if (!dragging && t - last < 33) return; // ~30fps idling; uncapped while dragging, so it tracks the finger
-    var dt = prevT ? Math.min(90, t - prevT) : 33;
-    prevT = t;
     last = t;
-
-    // advance the lock's strike / break / reform cycle
-    lkT += dt;
-    if (shakeAmt > 0) shakeAmt = Math.max(0, shakeAmt - dt / 220);
-    if (lkPhase === "idle") {
-      nextStrike -= dt;
-      if (nextStrike <= 0) {
-        var a = pickFrontNode();
-        if (a >= 0) { attacker = a; strikeU = 0; hitDone = false; lkPhase = "strike"; lkT = 0; }
-        else nextStrike = 300;                   // nothing in front yet; look again shortly
-      }
-    } else if (lkPhase === "strike") {
-      strikeU = lkT / (IN + OUT);
-      if (!hitDone && lkT >= IN) {               // contact
-        hitDone = true;
-        damage = Math.min(MAXHIT, damage + 1);
-        shakeAmt = 1;
-        if (damage >= MAXHIT) { attacker = -1; lkPhase = "shatter"; lkT = 0; }
-      } else if (lkT >= IN + OUT) {              // icon returned
-        attacker = -1; lkPhase = "idle"; lkT = 0; nextStrike = 900 + Math.random() * 1100;
-      }
-    } else if (lkPhase === "shatter") { if (lkT > SHAT) { lkPhase = "gone"; lkT = 0; } }
-    else if (lkPhase === "gone") { if (lkT > GONE) { lkPhase = "reform"; lkT = 0; } }
-    else if (lkPhase === "reform") {
-      if (lkT > REFORM) { lkPhase = "idle"; lkT = 0; damage = 0; nextStrike = 1400 + Math.random() * 1600; }
-    }
     if (!dragging) {
       angY += velY; angX += velX;
       velY += (BASE - velY) * 0.03; // ease back to gentle auto-rotate
@@ -839,91 +792,30 @@ function renderLightGlobe(mount) {
       wctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     }
     wctx.clearRect(0, 0, w, h);
-
-    // Padlock behind the icons. Flat and low-contrast on purpose — it must never compete with
-    // the icons for attention — and it breaks along real seams on a slow cycle (see lkPhase).
-    var S = R * 0.42;
-    var lx = cx, ly = cy + S * 0.10;                     // lock centre
-    lkLx = lx; lkLy = ly;                                // remembered for the icon's flight path
-    if (shakeAmt > 0) {                                  // knock the lock on each hit
-      lx += (Math.random() - 0.5) * S * 0.12 * shakeAmt;
-      ly += (Math.random() - 0.5) * S * 0.12 * shakeAmt;
+    var Rw = R * 0.82;
+    for (var vi = 0; vi < wv.length; vi++) {              // project in place — no per-frame garbage
+      var v = wv[vi], p3 = wproj[vi];
+      var vx1 = v[0] * cy_ - v[2] * sy, vz1 = v[0] * sy + v[2] * cy_;
+      var vy2 = v[1] * cx_ - vz1 * sx, vz2 = v[1] * sx + vz1 * cx_;
+      p3.x = cx + vx1 * Rw; p3.y = cy + vy2 * Rw; p3.z = vz2;
     }
-    var bh = S * 0.95, top = ly - bh / 2;
-    var shackleTop = top - S * 0.22;
-
-    // shackle: rises and swings as the lock breaks
-    var e = lkPhase === "shatter" ? (lkT / SHAT)
-          : lkPhase === "gone" ? 1
-          : lkPhase === "reform" ? 1 - (lkT / REFORM) : 0;
-    var lift = e * S * 0.9, tilt = e * 0.5;
-    wctx.save();
-    wctx.translate(lx + S * 0.38, shackleTop);
-    wctx.rotate(tilt);
-    wctx.translate(-(lx + S * 0.38), -shackleTop + -lift);
-    wctx.lineWidth = Math.max(1.5, S * 0.09);
-    wctx.strokeStyle = "rgba(168,85,247,0.30)";
-    wctx.lineCap = "round";
-    wctx.beginPath();
-    wctx.moveTo(lx - S * 0.38, top + S * 0.10);
-    wctx.lineTo(lx - S * 0.38, shackleTop);
-    wctx.arc(lx, shackleTop, S * 0.38, Math.PI, 0);
-    wctx.lineTo(lx + S * 0.38, top + S * 0.10);
-    wctx.stroke();
-    wctx.restore();
-
-    var BODY = "rgba(168,85,247,0.13)", EDGE = "rgba(168,85,247,0.34)";
-    if (lkPhase === "idle" || lkPhase === "strike") {   // whole while it is being struck; fragments only once it breaks
-      // whole body, with seams creeping in over the first part of the intact stretch
-      var r = S * 0.14, bw = S * 1.15;
-      wctx.fillStyle = BODY; wctx.strokeStyle = EDGE; wctx.lineWidth = Math.max(1, S * 0.06);
+    // Batch the cage by depth: one stroke() per opacity band instead of one per edge (~480 → 5).
+    wctx.lineWidth = 1;
+    for (var band = 0; band < EDGE_BUCKETS; band++) {
       wctx.beginPath();
-      wctx.moveTo(lx - bw / 2 + r, top);
-      wctx.arcTo(lx + bw / 2, top, lx + bw / 2, top + bh, r);
-      wctx.arcTo(lx + bw / 2, top + bh, lx - bw / 2, top + bh, r);
-      wctx.arcTo(lx - bw / 2, top + bh, lx - bw / 2, top, r);
-      wctx.arcTo(lx - bw / 2, top, lx + bw / 2, top, r);
-      wctx.closePath(); wctx.fill(); wctx.stroke();
-      wctx.fillStyle = "rgba(13,10,20,0.85)";
-      wctx.beginPath(); wctx.arc(lx, ly + bh * 0.10, S * 0.11, 0, Math.PI * 2); wctx.fill();
-      wctx.fillRect(lx - S * 0.045, ly + bh * 0.10, S * 0.09, bh * 0.34);
-      // one more group of seams per hit — the cracks appear as it is struck, not up front
-      var shown = Math.floor((damage / MAXHIT) * LK.segs.length);
-      wctx.strokeStyle = "rgba(240,171,252,0.5)"; wctx.lineWidth = Math.max(1, S * 0.03);
-      wctx.beginPath();
-      for (var si = 0; si < shown; si++) {
-        var sg = LK.segs[si];
-        wctx.moveTo(lx + sg[0][0] * S, ly + sg[0][1] * S);
-        wctx.lineTo(lx + sg[1][0] * S, ly + sg[1][1] * S);
+      var drew = false;
+      for (var e = 0; e < wedges.length; e++) {
+        var pa = wproj[wedges[e][0]], pb = wproj[wedges[e][1]];
+        var depth = ((pa.z + pb.z) / 2 + 1.15) / 2.15;     // 0 back .. 1 front
+        if (((depth * (EDGE_BUCKETS - 1) + 0.5) | 0) !== band) continue;
+        wctx.moveTo(pa.x, pa.y);
+        wctx.lineTo(pb.x, pb.y);
+        drew = true;
       }
+      if (!drew) continue;
+      var op = (band / (EDGE_BUCKETS - 1)) * 0.26;         // ~0.02 back → ~0.26 front, like desktop
+      wctx.strokeStyle = "rgba(212,175,55," + op.toFixed(3) + ")";
       wctx.stroke();
-    } else {
-      // broken: fragments fly out (shatter), hang (gone), or ease home (reform)
-      var u = lkPhase === "shatter" ? (lkT / SHAT)
-            : lkPhase === "gone" ? 1
-            : 1 - (lkT / REFORM);
-      var ee = 1 - Math.pow(1 - u, 2.2);
-      var fade = lkPhase === "gone" ? 1 - (lkT / GONE) * 0.4 : 1;
-      wctx.strokeStyle = EDGE; wctx.lineWidth = Math.max(1, S * 0.05);
-      for (var fi = 0; fi < LK.frags.length; fi++) {
-        var fr = LK.frags[fi];
-        var ox = fr.dx * fr.reach * ee * S, oy = fr.dy * fr.reach * ee * S;
-        var ang = fr.rot * ee;
-        wctx.save();
-        wctx.translate(lx + fr.cx * S + ox, ly + fr.cy * S + oy);
-        wctx.rotate(ang);
-        wctx.globalAlpha = Math.max(0, fade);
-        wctx.fillStyle = BODY;
-        wctx.beginPath();
-        for (var pi = 0; pi < fr.poly.length; pi++) {
-          var pp = fr.poly[pi];
-          var px = (pp[0] - fr.cx) * S, py = (pp[1] - fr.cy) * S;
-          if (pi === 0) wctx.moveTo(px, py); else wctx.lineTo(px, py);
-        }
-        wctx.closePath(); wctx.fill(); wctx.stroke();
-        wctx.restore();
-      }
-      wctx.globalAlpha = 1;
     }
 
     for (var i = 0; i < nodes.length; i++) {
@@ -936,18 +828,8 @@ function renderLightGlobe(mount) {
       var op = Math.max(0, Math.min(1, (z2 + 1.1) / 1.7));        // depth -> opacity
       // Position purely with transform: writing left/top every frame forced a full layout pass for
       // every node, which is what made dragging feel heavy on phones.
-      var px = cx + x1 * R, py = cy + y2 * R;
-      if (i === attacker) {
-        // dart toward the lock and back: 0 at the ends, contact near the middle
-        var bl = Math.sin(Math.min(1, strikeU) * Math.PI);
-        bl = bl * bl * 0.92;                              // sharpen the approach
-        px += (lkLx - px) * bl;
-        py += (lkLy - py) * bl;
-        sc *= 1 + bl * 0.15;
-        op = 1;
-      }
       n.el.style.transform =
-        "translate3d(" + px.toFixed(1) + "px," + py.toFixed(1) + "px,0)" +
+        "translate3d(" + (cx + x1 * R).toFixed(1) + "px," + (cy + y2 * R).toFixed(1) + "px,0)" +
         " translate(-50%,-50%) scale(" + sc.toFixed(3) + ")";
       var opS = op.toFixed(2);
       if (opS !== n.lastOp) { n.el.style.opacity = opS; n.lastOp = opS; }
@@ -964,11 +846,10 @@ const mount = document.getElementById("skills-globe");
 const isMobile = window.matchMedia("(max-width: 767px)").matches;
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (mount) {
-  if (isMobile && prefersReduced) {
-    renderStatic(mount);                     // reduced motion on a phone: static grid, no loop
+  if (isMobile) {
+    if (prefersReduced) renderStatic(mount); // no motion requested -> static grid
+    else renderLightGlobe(mount);            // wireframe-cage globe: light, no WebGL, no scroll-trap
   } else if ("IntersectionObserver" in window) {
-    // Desktop and mobile alike: load the 3D globe lazily when the section nears the viewport.
-    // If WebGL can't run (weak/old phone), loadGlobe's catch drops to the light 2D globe.
     const io = new IntersectionObserver(
       function (entries) {
         if (entries.some(function (e) { return e.isIntersecting; })) {
