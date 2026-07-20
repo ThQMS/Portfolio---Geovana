@@ -626,8 +626,14 @@ function loadGlobe(mount) {
       initGlobe(mount);
     })
     .catch(function () {
-      mount.innerHTML =
-        '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:12px;color:#8b949e">// universo 3D indisponível no momento</div>';
+      // Three.js failed to load, or the device has no usable WebGL context. Fall back to the flat
+      // 2D globe — the plan B: try full 3D everywhere, drop to the light version where it can't run.
+      mount.innerHTML = "";
+      try { renderLightGlobe(mount); }
+      catch (e) {
+        mount.innerHTML =
+          '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:12px;color:#8b949e">// universo indisponível no momento</div>';
+      }
     });
 }
 
@@ -958,10 +964,11 @@ const mount = document.getElementById("skills-globe");
 const isMobile = window.matchMedia("(max-width: 767px)").matches;
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (mount) {
-  if (isMobile) {
-    if (prefersReduced) renderStatic(mount); // no motion requested -> static grid
-    else renderLightGlobe(mount);            // lightweight rotating sphere, no WebGL
+  if (isMobile && prefersReduced) {
+    renderStatic(mount);                     // reduced motion on a phone: static grid, no loop
   } else if ("IntersectionObserver" in window) {
+    // Desktop and mobile alike: load the 3D globe lazily when the section nears the viewport.
+    // If WebGL can't run (weak/old phone), loadGlobe's catch drops to the light 2D globe.
     const io = new IntersectionObserver(
       function (entries) {
         if (entries.some(function (e) { return e.isIntersecting; })) {

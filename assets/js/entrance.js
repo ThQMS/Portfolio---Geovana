@@ -133,10 +133,15 @@
 
     var shell = document.querySelector(".min-h-screen");
     var DRAG = 40;                          // px the page is dragged in from behind the swarm
-    if (shell) shell.style.willChange = "transform";
+    if (shell) {
+      shell.style.willChange = "transform";
+      shell.style.transform = "translate3d(" + (-DRAG) + "px,0,0)";  // start pose, set now...
+      void shell.offsetHeight;             // ...and force the layer promotion here, while the veil
+                                           // still hides everything, instead of on the first sweep frame
+    }
 
     var start = null;
-    var lastFrame = 0, MIN_DT = desktop ? 0 : 32;
+    var lastFrame = 0, MIN_DT = desktop ? 15 : 32;  // ~60fps cap: steadier than uncapped on high-refresh screens
     var done = false;
 
     function draw(t) {
@@ -164,7 +169,7 @@
           var steps = 1;
           if (b.px !== null) {
             var dx = x - b.px, dy = y - b.py;
-            steps = Math.max(1, Math.min(12, Math.ceil(Math.sqrt(dx * dx + dy * dy) / (r * 0.5))));
+            steps = Math.max(1, Math.min(8, Math.ceil(Math.sqrt(dx * dx + dy * dy) / (r * 0.6))));
           }
           for (var s = 1; s <= steps; s++) {
             var k = s / steps;
