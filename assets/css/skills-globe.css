@@ -1,0 +1,144 @@
+/* skills-globe.css — appearance of the Devicon skill nodes on the 3D CSS3D sphere.
+   Colours use the site's orange accent (#a855f7) and can be re-themed freely. */
+#skills-globe {
+  cursor: grab;
+}
+#skills-globe:active {
+  cursor: grabbing;
+}
+
+.skill-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 66px;
+  padding: 8px 6px;
+  border-radius: 12px;
+  background: rgba(30, 30, 30, 0.55);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.06);
+  backdrop-filter: blur(2px);
+  user-select: none;
+  cursor: grab;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.skill-node:hover {
+  border-color: rgba(168, 85, 247, 0.7);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.35);
+  transform: scale(1.12);
+}
+.skill-node i {
+  font-size: 28px;
+  line-height: 1;
+}
+/* dark-brand icons (Next.js, Rust, Three.js, iOS, …) get a white glow so they read on the dark globe */
+.skill-node i.is-dark {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.85), 0 0 11px rgba(255, 255, 255, 0.5);
+}
+.skill-node span {
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: #8b949e;
+  white-space: nowrap;
+}
+
+/* Static skills grid — lightweight mobile fallback (no WebGL/Three.js). */
+.skills-static {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  overflow-y: auto;
+}
+.skills-static .ss-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 72px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  background: rgba(30, 30, 30, 0.5);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+}
+.skills-static .ss-item i { font-size: 26px; line-height: 1; }
+.skills-static .ss-item i.is-dark { text-shadow: 0 0 5px rgba(255, 255, 255, 0.85); }
+.skills-static .ss-item span {
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 9px;
+  color: #8b949e;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Light globe — DOM-only spherical icon cloud for mobile (no WebGL / no Three.js). */
+.light-globe {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y; /* vertical = page scroll; horizontal = spin */
+}
+.light-globe:active { cursor: grabbing; }
+.light-globe .lg-node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 58px;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+.light-globe .lg-node i { font-size: 24px; line-height: 1; }
+.light-globe .lg-node i.is-dark { text-shadow: 0 0 5px rgba(255, 255, 255, 0.85); }
+.light-globe .lg-node span {
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 8px;
+  color: #8b949e;
+  white-space: nowrap;
+}
+.light-globe .lg-wire { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+
+
+/* ---- Brand-colour corrections ----
+ * Devicon here is an icon FONT, so every glyph is single-colour: two-tone marks collapse to one
+ * hue and a few resolve to near-black, invisible on this dark purple background. */
+.skill-node i.devicon-python-plain.colored,
+.skills-static .ss-item i.devicon-python-plain.colored,
+.light-globe .lg-node i.devicon-python-plain.colored { color: #7aa8d8; }  /* era todo amarelo */
+.skill-node i.devicon-linux-plain.colored,
+.skills-static .ss-item i.devicon-linux-plain.colored,
+.light-globe .lg-node i.devicon-linux-plain.colored { color: #e8c33a; }  /* era #000 */
+.skill-node i.devicon-apple-original.colored,
+.skills-static .ss-item i.devicon-apple-original.colored,
+.light-globe .lg-node i.devicon-apple-original.colored { color: #e6e6ea; }  /* era #000 */
+.skill-node i.devicon-bash-plain.colored,
+.skills-static .ss-item i.devicon-bash-plain.colored,
+.light-globe .lg-node i.devicon-bash-plain.colored { color: #89e051; }  /* era quase preto */
+.skill-node i.devicon-cypressio-plain.colored,
+.skills-static .ss-item i.devicon-cypressio-plain.colored,
+.light-globe .lg-node i.devicon-cypressio-plain.colored { color: #8be9c8; }  /* era #1b1e2e */
+.skill-node i.devicon-insomnia-plain.colored,
+.skills-static .ss-item i.devicon-insomnia-plain.colored,
+.light-globe .lg-node i.devicon-insomnia-plain.colored { color: #a78bfa; }  /* era indigo escuro */
+.skill-node i.devicon-mysql-original.colored,
+.skills-static .ss-item i.devicon-mysql-original.colored,
+.light-globe .lg-node i.devicon-mysql-original.colored { color: #5ab4d6; }  /* era teal escuro */
+.skill-node i.devicon-postgresql-plain.colored,
+.skills-static .ss-item i.devicon-postgresql-plain.colored,
+.light-globe .lg-node i.devicon-postgresql-plain.colored { color: #6fa8dc; }  /* destacar no fundo */
+.skill-node i.devicon-sqldeveloper-plain.colored,
+.skills-static .ss-item i.devicon-sqldeveloper-plain.colored,
+.light-globe .lg-node i.devicon-sqldeveloper-plain.colored { color: #cfcfd8; }  /* cinza claro */
+.skill-node i.devicon-trello-plain.colored,
+.skills-static .ss-item i.devicon-trello-plain.colored,
+.light-globe .lg-node i.devicon-trello-plain.colored { color: #5b9cff; }  /* azul mais claro */

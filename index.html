@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta name="theme-color" content="#0d0a14"/><title>Geovana Zys | QA &amp; Segurança Ofensiva</title><meta content="Geovana Zys — Analista de Testes e Engenheira de Qualidade de Software, com pós em Segurança Ofensiva e Inteligência Cibernética." name="description"/><meta content="Geovana Zys" name="author"/><link href="https://thqms.github.io/Portfolio---Geovana/" rel="canonical"/><meta content="Geovana Zys — QA &amp; Segurança Ofensiva" property="og:title"/><meta content="Qualidade de software e segurança ofensiva. Quebrando o sistema antes que alguém quebre por você." property="og:description"/><meta content="website" property="og:type"/><meta content="https://thqms.github.io/Portfolio---Geovana/" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Geovana Zys — QA &amp; Segurança Ofensiva" name="twitter:title"/><link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+
+<!-- fonts — Geist + Geist Mono variable faces (declared in style_002.css); the woff2 are preloaded -->
+<link as="font" crossorigin="" href="assets/fonts/s.p.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="assets/fonts/s.p_2.woff2" rel="preload" type="font/woff2"/>
+
+<!-- css -->
+<!-- style_002.css — @font-face for Geist / Geist Mono + the body font-variable classes -->
+<link href="assets/css/style_002.css" rel="stylesheet"/>
+<!-- style_003_gold.css — main Tailwind build re-themed (black/gold/wine): colour tokens, utilities, keyframes, grid-bg & cursor-glow decor -->
+<link href="assets/css/style_003_gold.css" rel="stylesheet"/>
+<!-- style_004_gold.css — small helpers re-themed: hide-scrollbar, terminal-cursor, gradient-text, box-glow, focus rings -->
+<link href="assets/css/style_004_gold.css" rel="stylesheet"/>
+<!-- devicon.min.css — Devicon icon-font stylesheet loaded by the original -->
+<link href="assets/css/devicon.min.css?v=2" rel="stylesheet"/>
+<!-- scroll-fixes.css — extracted from the inline scroll-fix style block -->
+<link href="assets/css/scroll-fixes.css" rel="stylesheet"/>
+<!-- skills-globe.css — styling for the 3D skill-icon nodes -->
+<link href="assets/css/skills-globe.css?v=5" rel="stylesheet"/>
+<!-- effects.css — ambient dev/architecture effects: matrix rain, compile bar, blueprint spine -->
+<link href="assets/css/effects.css?v=6" rel="stylesheet"/>
+
+<!-- import map — resolves the "three" ES module + addons from a CDN for the skills globe -->
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+
+<!-- structured data (JSON-LD) — kept inline as required; not user-visible -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Geovana Zys","url":"https://www.linkedin.com/in/geovana-zys-039a48216","sameAs":["https://www.linkedin.com/in/geovana-zys-039a48216"],"jobTitle":"Analista de Testes / QA","worksFor":{"@type":"Organization","name":"Vertis Solutions"},"email":"geovana.bragafzys@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Campo Grande","addressRegion":"MS","addressCountry":"BR"},"alumniOf":{"@type":"EducationalOrganization","name":"Universidade Catolica Dom Bosco"},"knowsAbout":["Quality Assurance","Testes de Software","Automacao de Testes","Seguranca Ofensiva","Inteligencia Cibernetica","Pentest","Flutter","Dart","Python","Kanban","Scrum"]}</script>
+</head>
+<body class="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased">
+
+<!-- boot-sequence (CSS-driven terminal boot overlay; auto-hides, click to skip) -->
+<div id="boot" aria-hidden="true"><div class="boot-inner">
+<p class="boot-line">&gt; iniciando varredura.sys</p>
+<p class="boot-line">&gt; mapeando alvo ....... <span class="ok">[OK]</span></p>
+<p class="boot-line">&gt; carregando payloads .. <span class="ok">[OK]</span></p>
+<p class="boot-line">&gt; ui em modo furtivo ... <span class="ok">[OK]</span></p>
+<p class="boot-line">&gt; scan --deep --target=portfolio</p>
+<div class="boot-build"><div class="boot-bar"><div class="boot-bar-fill"></div></div><span class="boot-pct">100%</span></div>
+</div></div>
+
+<!-- app-shell -->
+<div class="min-h-screen bg-dark-200 text-foreground relative overflow-x-hidden">
+<div class="cursor-glow hidden lg:block"></div>
+<div class="fixed inset-0 grid-bg pointer-events-none z-0"></div>
+
+<!-- language-switch (PT / EN toggle) -->
+<div id="lang-switch" role="group" aria-label="Selecionar idioma / Select language"><button type="button" class="lang-opt is-active" data-lang="pt" aria-pressed="true">PT</button><button type="button" class="lang-opt" data-lang="en" aria-pressed="false">EN</button></div>
+
+<!-- right-rail-nav (lg only) -->
+<div id="rail-nav" class="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4">
+<div class="absolute top-0 bottom-0 w-px bg-linear-to-b from-transparent via-orange-500/20 to-transparent -z-10"></div>
+<button aria-label="Início" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-orange-400 font-bold">Início</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-full h-full opacity-100 rotate-180 scale-100" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-8 h-8 bg-dark-200 border border-orange-400 text-orange-400 shadow-[0_0_20px_rgba(168,85,247,0.4)]"><i data-lucide="code-xml" class="w-4 h-4 opacity-100 scale-100"></i></div>
+</div>
+</button>
+<button aria-label="Sobre" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-muted-foreground">Sobre</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-4 h-4 opacity-0 rotate-0 scale-0" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-3 h-3 bg-dark-300 border border-dark-400 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20"><i data-lucide="terminal" class="w-0 h-0 opacity-0 scale-0"></i></div>
+</div>
+</button>
+<button aria-label="Habilidades" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-muted-foreground">Habilidades</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-4 h-4 opacity-0 rotate-0 scale-0" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-3 h-3 bg-dark-300 border border-dark-400 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20"><i data-lucide="cpu" class="w-0 h-0 opacity-0 scale-0"></i></div>
+</div>
+</button>
+<button aria-label="Experiência" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-muted-foreground">Experiência</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-4 h-4 opacity-0 rotate-0 scale-0" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-3 h-3 bg-dark-300 border border-dark-400 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20"><i data-lucide="git-branch" class="w-0 h-0 opacity-0 scale-0"></i></div>
+</div>
+</button>
+<button aria-label="Certificações" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-muted-foreground">Certificações</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-4 h-4 opacity-0 rotate-0 scale-0" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-3 h-3 bg-dark-300 border border-dark-400 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20"><i data-lucide="folder-open" class="w-0 h-0 opacity-0 scale-0"></i></div>
+</div>
+</button>
+<button aria-label="Formação" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-muted-foreground">Formação</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-4 h-4 opacity-0 rotate-0 scale-0" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-3 h-3 bg-dark-300 border border-dark-400 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20"><i data-lucide="graduation-cap" class="w-0 h-0 opacity-0 scale-0"></i></div>
+</div>
+</button>
+<button aria-label="Contato" class="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none focus:outline-none">
+<div class="absolute right-14 px-3 py-1.5 rounded-md bg-dark-100 border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(6,182,212,0.1)] flex items-center gap-2"><span class="text-orange-400">&gt;</span><span class="text-muted-foreground">Contato</span></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-4 h-4 opacity-0 rotate-0 scale-0" style="border-style:dashed;"></div>
+<div class="rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 w-3 h-3 bg-dark-300 border border-dark-400 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20"><i data-lucide="mail" class="w-0 h-0 opacity-0 scale-0"></i></div>
+</div>
+</button>
+</div>
+
+<!-- sidebar-nav (hidden variant, preserved from original DOM) -->
+<aside class="fixed left-0 top-0 h-full w-16 lg:w-64 bg-dark-100 border-r border-dark-300 z-50 hidden flex-col">
+<div class="p-4 border-b border-dark-300">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-linear-to-br from-orange-500 to-blue-600 flex items-center justify-center"><i data-lucide="code-xml" class="w-5 h-5 text-white"></i></div>
+<span class="font-mono font-bold text-lg hidden lg:block"><span class="text-orange-400">&lt;</span>Dev<span class="text-orange-400">/&gt;</span></span>
+</div>
+</div>
+<nav class="flex-1 py-4">
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group bg-orange-500/10 border-r-2 border-orange-400 text-orange-400"><i data-lucide="code-xml" class="w-5 h-5 text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">main.ts</span></button>
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group text-muted-foreground hover:text-foreground hover:bg-dark-50"><i data-lucide="terminal" class="w-5 h-5 group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">about.md</span></button>
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group text-muted-foreground hover:text-foreground hover:bg-dark-50"><i data-lucide="cpu" class="w-5 h-5 group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">skills.json</span></button>
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group text-muted-foreground hover:text-foreground hover:bg-dark-50"><i data-lucide="git-branch" class="w-5 h-5 group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">experience.git</span></button>
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group text-muted-foreground hover:text-foreground hover:bg-dark-50"><i data-lucide="folder-open" class="w-5 h-5 group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">certificacoes/</span></button>
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group text-muted-foreground hover:text-foreground hover:bg-dark-50"><i data-lucide="graduation-cap" class="w-5 h-5 group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">formacao.md</span></button>
+<button class="w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 group text-muted-foreground hover:text-foreground hover:bg-dark-50"><i data-lucide="mail" class="w-5 h-5 group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm hidden lg:block">contact.exe</span></button>
+</nav>
+<div class="p-4 border-t border-dark-300">
+<div class="flex items-center justify-center lg:justify-start gap-3">
+<a class="p-2 rounded-lg hover:bg-dark-50 text-muted-foreground hover:text-orange-400 transition-colors" href="mailto:geovana.bragafzys@gmail.com"><i data-lucide="mail" class="w-5 h-5"></i></a>
+<a class="p-2 rounded-lg hover:bg-dark-50 text-muted-foreground hover:text-orange-400 transition-colors" href="https://www.linkedin.com/in/geovana-zys-039a48216"><i data-lucide="link-2" class="w-5 h-5"></i></a>
+<a class="p-2 rounded-lg hover:bg-dark-50 text-muted-foreground hover:text-orange-400 transition-colors" href="mailto:geovana.bragafzys@gmail.com"><i data-lucide="mail" class="w-5 h-5"></i></a>
+</div>
+</div>
+</aside>
+
+<!-- mobile-menu (hamburger + slide-in panel with named sections) -->
+<button id="mobile-menu-toggle" aria-label="Abrir menu" aria-expanded="false"><i data-lucide="menu" class="w-5 h-5"></i></button>
+<div id="mobile-menu" aria-hidden="true">
+<div class="mm-backdrop"></div>
+<nav class="mm-panel">
+<div class="mm-head"><span class="mm-title">~/navegação</span><button id="mobile-menu-close" class="mm-close" aria-label="Fechar menu">✕</button></div>
+<button class="mm-link" data-nav="hero"><i data-lucide="code-xml" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Início</span><span class="mm-file">main.ts</span></span></button>
+<button class="mm-link" data-nav="about"><i data-lucide="terminal" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Sobre</span><span class="mm-file">about.md</span></span></button>
+<button class="mm-link" data-nav="skills"><i data-lucide="cpu" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Habilidades</span><span class="mm-file">skills.json</span></span></button>
+<button class="mm-link" data-nav="experience"><i data-lucide="git-branch" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Experiência</span><span class="mm-file">experience.git</span></span></button>
+<button class="mm-link" data-nav="projects"><i data-lucide="folder-open" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Certificações</span><span class="mm-file">certificacoes/</span></span></button>
+<button class="mm-link" data-nav="formacao"><i data-lucide="graduation-cap" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Formação</span><span class="mm-file">formacao.md</span></span></button>
+<button class="mm-link" data-nav="contact"><i data-lucide="mail" class="w-5 h-5 shrink-0"></i><span><span class="mm-name">Contato</span><span class="mm-file">contact.exe</span></span></button>
+</nav>
+</div>
+
+<main class="min-h-screen pb-20 md:pb-0">
+
+<!-- hero -->
+<section class="min-h-screen flex items-center justify-center relative overflow-hidden py-20 lg:py-0" id="hero">
+<div class="absolute inset-0 z-0 select-none">
+<div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+<div class="absolute inset-0 bg-linear-to-b from-dark-200 via-transparent to-dark-200 z-10"></div>
+<div class="absolute top-20 right-20 font-mono text-xs text-orange-500/20 hidden lg:block">&lt;Exploit.Init /&gt;</div>
+<div class="absolute bottom-20 left-40 font-mono text-xs text-green-500/20 hidden lg:block">while(alive) { break_it() }</div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+<div class="space-y-8 text-center lg:text-left order-2 lg:order-1">
+<div class="space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded border border-orange-500/30 bg-orange-500/5 text-orange-400 text-xs font-mono mb-4 animate-slide-in-up"><span class="relative flex h-2 w-2"><span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500 shadow-[0_0_6px_rgba(168,85,247,0.6)]"></span></span>MODO_OFENSIVO :: ATIVO · QA ONLINE</div>
+<h1 class="text-5xl lg:text-7xl font-bold tracking-tight animate-slide-in-up"><span class="text-foreground">Olá, eu sou </span><span class="text-transparent bg-clip-text bg-linear-to-r from-orange-400 to-blue-500 relative inline-block pb-3 -mb-3">Geovana Zys<div class="absolute bottom-1 left-0 w-full h-1 rounded-full blur-sm" style="background-color:rgba(217,70,239,0.7);"></div></span></h1>
+<p class="text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 animate-slide-in-up font-light" style="animation-delay:0.1s;"><span class="text-orange-400 font-mono">&lt;QA /&gt;</span> Quebrando o sistema antes que alguém quebre por você. Analista de testes com 4 anos de experiência, agora somando segurança ofensiva e inteligência cibernética.</p>
+</div>
+<div class="animate-slide-in-up flex flex-col sm:flex-row gap-4 items-stretch w-full max-w-xl mx-auto lg:mx-0" style="animation-delay:0.2s;">
+<a class="relative group cursor-pointer flex-1 min-w-70" href="https://www.linkedin.com/in/geovana-zys-039a48216" rel="noopener noreferrer" target="_blank">
+<div class="absolute -inset-0.5 bg-linear-to-r from-orange-500 to-blue-600 opacity-30 group-hover:opacity-70 transition duration-500" style="clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);"></div>
+<div class="relative bg-[#171021] border border-orange-500/30 p-4 flex items-center gap-4 hover:bg-[#1a1226] transition-colors shadow-2xl h-full" style="clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);">
+<div class="relative w-10 h-10 shrink-0 flex items-center justify-center bg-orange-500/10 rounded-sm border border-orange-500/20 group-hover:border-orange-500/50 group-hover:scale-105 transition-all"><i data-lucide="terminal" class="w-5 h-5 text-orange-400"></i></div>
+<div class="flex-1 text-left min-w-0">
+<div class="flex justify-between items-center mb-1">
+<h3 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors truncate">Conectar no LinkedIn</h3>
+<i data-lucide="external-link" class="w-3 h-3 text-gray-500 group-hover:text-orange-400 transition-colors ml-2"></i>
+</div>
+<div class="w-full bg-gray-800 h-1 rounded-full overflow-hidden mb-1"><div class="h-full bg-orange-500 w-[60%] group-hover:w-[85%] transition-all duration-700 ease-out relative"><div class="absolute inset-0 bg-white/30 animate-pulse-fast"></div></div></div>
+<div class="flex justify-between font-mono text-[9px] text-gray-500"><span class="truncate mr-2">&gt; sudo boot_linkedin</span><span class="text-orange-500 group-hover:animate-pulse whitespace-nowrap">Carregando...</span></div>
+</div>
+</div>
+</a>
+<a class="relative group cursor-pointer sm:w-auto shrink-0" href="mailto:geovana.bragafzys@gmail.com">
+<div class="absolute -inset-0.5 bg-linear-to-r from-orange-500 to-orange-400 opacity-20 group-hover:opacity-50 transition duration-500" style="clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);"></div>
+<div class="relative bg-[#171021] border border-orange-500/30 group-hover:border-orange-500/50 p-4 flex items-center justify-center gap-3 hover:bg-[#1a1226] transition-colors shadow-xl h-full min-w-30" style="clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);">
+<i data-lucide="mail" class="w-5 h-5 text-white group-hover:text-orange-400 transition-colors"></i>
+<div class="text-left"><div class="text-[10px] text-gray-400 font-mono leading-none mb-0.5">Fale comigo</div><div class="font-bold text-white group-hover:text-orange-400 transition-colors leading-none">E-mail</div></div>
+</div>
+</a>
+</div>
+<div class="pt-6 flex flex-wrap justify-center lg:justify-start gap-2 opacity-80 animate-slide-in-up" style="animation-delay:0.3s;">
+<span class="text-xs font-mono text-gray-500 mr-2 py-1">MÓDULOS_CARREGADOS:</span>
+<span class="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/80 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default">AUTOMAÇÃO_QA</span>
+<span class="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/80 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default">PENTEST</span>
+<span class="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/80 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default">FLUTTER</span>
+<span class="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/80 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default">DART</span>
+<span class="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/80 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default">PYTHON</span>
+<span class="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/80 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default">KANBAN</span>
+</div>
+</div>
+<div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+<div class="w-full max-w-xl relative">
+<div class="absolute -inset-4 bg-linear-to-r from-orange-500/10 to-purple-500/10 rounded-xl blur-xl -z-10"></div>
+<div class="terminal w-full max-w-2xl shadow-2xl overflow-hidden rounded-xl border border-dark-300 bg-dark-200">
+<div class="flex items-center justify-between px-4 py-3 bg-dark-100 border-b border-dark-300">
+<div class="flex gap-2"><div class="w-3 h-3 rounded-full bg-red-500/80"></div><div class="w-3 h-3 rounded-full bg-yellow-500/80"></div><div class="w-3 h-3 rounded-full bg-green-500/80"></div></div>
+<div class="font-mono text-xs text-muted-foreground flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>exploit_test.dart</div>
+<div class="w-10"></div>
+</div>
+<div class="p-3 sm:p-6 overflow-x-auto">
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre" style="padding-left:0rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">1</span><span class="inline-block w-2.5 h-5 bg-orange-400 align-middle animate-pulse ml-1"></span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:0rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">2</span><span class="text-purple-400">import</span><span class="text-green-400"> 'package:test/test.dart'</span><span>;</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:0rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">3</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:0rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">4</span><span class="text-yellow-400">test</span><span>(</span><span class="text-green-400">'encontra a falha antes deles'</span><span>, () {</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:1.5rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">5</span><span class="text-purple-400">final</span><span> alvo = </span><span class="text-blue-400">Sistema</span><span>();</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:3rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">6</span><span class="text-gray-500 italic">// caixa-preta, caixa-branca, e o que houver</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:4.5rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">7</span><span class="text-blue-400">expect</span><span>(alvo.</span><span class="text-orange-400">vulnerabilidades</span><span>, </span><span class="text-yellow-400">isEmpty</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:4.5rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">8</span><span class="text-blue-400">expect</span><span>(alvo.</span><span class="text-orange-400">bugsEmProd</span><span>, </span><span class="text-yellow-400">0</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:4.5rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">9</span><span class="text-gray-500 italic">// se passar, eu testo mais forte</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:3rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">10</span><span>});</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:1.5rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">11</span></div>
+<div class="font-mono text-xs sm:text-sm lg:text-base leading-relaxed whitespace-pre-wrap md:whitespace-pre opacity-0" data-terminal-line style="padding-left:0rem;"><span class="text-muted-foreground mr-4 select-none opacity-30 text-xs">12</span><span class="text-green-400">// ✓ todos os testes passaram</span></div>
+<div class="mt-8 flex items-center gap-4">
+<button id="btn-about" class="group flex items-center gap-2 px-6 py-3 bg-orange-500/10 border border-orange-500/30 rounded-lg hover:bg-orange-500/20 hover:border-orange-500/50 transition-all duration-300"><i data-lucide="terminal" class="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform"></i><span class="font-mono text-sm text-orange-400">Sobre mim</span></button>
+<button id="btn-view-projects" class="group flex items-center gap-2 px-6 py-3 border border-dark-400 rounded-lg hover:border-orange-500/30 transition-all duration-300 bg-transparent"><i data-lucide="folder-open" class="w-4 h-4 text-muted-foreground group-hover:text-orange-400 transition-colors"></i><span class="font-mono text-sm text-muted-foreground group-hover:text-foreground">Ver Certificações</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button id="scroll-down-hint" aria-label="Ir para a próxima seção" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground animate-bounce cursor-pointer bg-transparent border-0 outline-none focus:outline-none hover:text-orange-400 transition-colors"><i data-lucide="chevron-right" class="w-6 h-6 rotate-90"></i></button>
+</section>
+
+<!-- about -->
+<section class="min-h-screen flex items-center py-20 px-6 lg:px-12 relative" id="about">
+<div class="max-w-6xl mx-auto w-full">
+<div class="flex items-center gap-4 mb-12 animate-on-scroll" data-animate-on-scroll><i data-lucide="terminal" class="w-6 h-6 text-orange-400"></i><h2 class="font-mono text-2xl lg:text-3xl font-bold"><span class="text-muted-foreground">#</span> Sobre.system</h2></div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+<div class="relative group animate-on-scroll" data-animate-on-scroll>
+<div class="absolute -inset-1 bg-linear-to-r from-orange-500 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+<div class="relative bg-[#191122] border border-orange-500/30 rounded-2xl p-6 lg:p-10 overflow-hidden">
+<div class="relative w-48 h-48 mx-auto mb-8">
+<div class="absolute inset-0 rounded-full border-2 border-orange-500/30 animate-spin-slow-reverse border-t-transparent border-b-transparent"></div>
+<div class="absolute inset-2 rounded-full border-2 border-blue-500/30 animate-spin-slow border-l-transparent border-r-transparent"></div>
+<div class="absolute inset-4 rounded-full overflow-hidden bg-dark-200 border border-dark-300 shadow-inner"><img src="assets/img/geovana.jpeg" alt="Geovana Zys" width="176" height="176" loading="lazy" decoding="async" class="w-full h-full object-cover" style="object-position:50% 34%;"/></div>
+<div class="absolute bottom-4 right-4 w-4 h-4 bg-green-500 rounded-full border-2 border-[#191122] animate-pulse"></div>
+</div>
+<div class="font-mono text-sm space-y-3">
+<div class="flex justify-between items-center border-b border-white/5 pb-2"><span class="text-gray-500">OPERADOR</span><span class="text-orange-400 font-bold tracking-widest">GEOVANA ZYS</span></div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2"><span class="text-gray-500">FUNÇÃO</span><span class="text-blue-400">QA_SEGURANCA_OFENSIVA</span></div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2"><span class="text-gray-500">LOCALIZAÇÃO</span><span class="text-white">Campo Grande - MS</span></div>
+<div class="flex justify-between items-center pb-2"><span class="text-gray-500">STATUS</span><span class="bg-green-500/10 text-green-400 px-2 py-0.5 rounded text-xs border border-green-500/20">ONLINE</span></div>
+</div>
+<div class="absolute top-0 left-0 w-full h-1 bg-orange-400/20 shadow-[0_0_15px_rgba(168,85,247,0.5)] animate-scanline pointer-events-none"></div>
+</div>
+</div>
+<div class="space-y-8 animate-on-scroll" data-animate-on-scroll style="animation-delay:0.2s;">
+<div class="bg-[#191122] rounded-lg border border-dark-300 font-mono text-sm shadow-xl overflow-hidden group hover:border-orange-500/30 transition-colors">
+<div class="bg-[#272033] px-4 py-2 flex items-center gap-2 border-b border-dark-300"><i data-lucide="terminal" class="w-3.5 h-3.5 text-gray-400"></i><span class="text-gray-400 text-xs">user_profile.log</span></div>
+<div class="p-6 text-gray-300 leading-relaxed space-y-4">
+<p><span class="text-blue-400">➜</span> <span class="text-purple-400">whoami</span></p>
+<p class="pl-4 border-l-2 border-white/10">Sou Analista de Qualidade com 4 anos de experiência, hoje na Vertis Solutions, garantindo a qualidade de sistemas críticos. Hoje me especializo em Engenharia de Qualidade de Software e em Segurança Ofensiva.</p>
+<p><span class="text-blue-400">➜</span> <span class="text-purple-400">cat</span> mission.txt</p>
+<p class="pl-4 border-l-2 border-white/10 text-gray-400" data-i18n-html="mission">Achar o que ninguém viu — antes que vire incidente. Foco em <span class="text-white">automação de testes</span> e <span class="text-white">segurança ofensiva</span>.</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-[#191122] p-4 rounded-lg border border-dark-300 hover:border-orange-500/30 transition-all group">
+<div class="flex items-center gap-2 mb-2"><i data-lucide="cpu" class="w-4 h-4 text-orange-400"></i><span class="text-xs text-gray-500 font-mono">EXPERIÊNCIA</span></div>
+<div class="text-2xl font-bold text-white font-mono group-hover:text-orange-400 transition-colors"><span data-count="4">0</span>+ <span class="text-sm text-gray-600">ANOS</span></div>
+</div>
+<div class="bg-[#191122] p-4 rounded-lg border border-dark-300 hover:border-blue-500/30 transition-all group">
+<div class="flex items-center gap-2 mb-2"><i data-lucide="code-xml" class="w-4 h-4 text-blue-400"></i><span class="text-xs text-gray-500 font-mono">CERTIFICAÇÕES</span></div>
+<div class="text-2xl font-bold text-white font-mono group-hover:text-blue-400 transition-colors"><span data-count="5">0</span>+ <span class="text-sm text-gray-600">CURSOS</span></div>
+</div>
+<div class="bg-[#191122] p-4 rounded-lg border border-dark-300 hover:border-orange-500/30 transition-all group">
+<div class="flex items-center gap-2 mb-2"><i data-lucide="bug" class="w-4 h-4 text-orange-400"></i><span class="text-xs text-gray-500 font-mono">BUGS CAÇADOS</span></div>
+<div class="text-2xl font-bold text-white font-mono group-hover:text-orange-400 transition-colors">∞ <span class="text-sm text-gray-600">Testes</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- skills -->
+<section class="min-h-screen py-20 px-6 lg:px-12" id="skills">
+<div class="max-w-6xl mx-auto">
+<div class="flex items-center gap-4 mb-12 animate-on-scroll" data-animate-on-scroll><i data-lucide="cpu" class="w-6 h-6 text-orange-400"></i><h2 class="font-mono text-2xl lg:text-3xl font-bold"><span class="text-muted-foreground">#</span> Habilidades.json</h2></div>
+<div class="h-150 w-full flex items-center justify-center relative">
+<div class="absolute inset-0 cursor-grab active:cursor-grabbing">
+<div id="skills-globe" style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto;"></div>
+</div>
+<div id="skills-caption" class="absolute -bottom-8 left-1/2 -translate-x-1/2 pointer-events-none text-center">
+<div class="flex items-center gap-2 text-muted-foreground bg-dark-100 px-4 py-2 rounded-full border border-white/5"><i data-lucide="globe" class="w-4 h-4 animate-spin-slow"></i><span class="font-mono text-xs">Arraste para explorar o arsenal de QA e segurança</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- experience -->
+<section class="min-h-screen py-20 px-6 lg:px-12 relative overflow-hidden" id="experience">
+<div class="absolute inset-0 grid-bg opacity-20 pointer-events-none"></div>
+<div class="max-w-5xl mx-auto relative z-10">
+<div class="flex items-center gap-4 mb-16 animate-on-scroll" data-animate-on-scroll><i data-lucide="git-branch" class="w-6 h-6 text-orange-400"></i><h2 class="font-mono text-2xl lg:text-3xl font-bold"><span class="text-muted-foreground">$</span> git log --stat --oneline</h2></div>
+<div class="relative pl-8 lg:pl-0">
+<div class="absolute left-8 lg:left-1/2 top-0 bottom-0 w-px bg-orange-900/50 transform -translate-x-1/2 hidden lg:block"></div>
+<div class="absolute left-8 top-0 bottom-0 w-px bg-orange-900/50 lg:hidden"></div>
+<div class="space-y-16">
+<div class="git-commit relative flex flex-col lg:flex-row items-center gap-10">
+<div class="hidden lg:flex w-1/2 justify-end">
+<div class="flex items-center gap-2 bg-[#191122] px-4 py-2 rounded-full border border-orange-500/20"><i data-lucide="calendar" class="w-3.5 h-3.5 text-orange-400"></i><span class="font-mono text-xs text-gray-400">set 2025 - atual</span></div>
+</div>
+<div class="absolute left-8 lg:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10"><div class="w-4 h-4 rounded-full bg-dark-200 border-2 border-orange-500 relative ring-4 ring-dark-100"><div class="absolute inset-0 bg-orange-400 rounded-full opacity-20 animate-pulse"></div></div></div>
+<div class="w-full lg:w-1/2 pl-12 lg:pl-0">
+<div class="relative group lg:ml-10">
+<div class="hidden lg:block absolute top-6 w-10 h-px bg-orange-500/30 -left-10"></div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 overflow-hidden hover:border-orange-500/30 transition-all duration-300 shadow-xl group-hover:shadow-2xl hover:-translate-y-1">
+<div class="bg-[#221a2e] px-4 py-2 border-b border-dark-300 flex items-center justify-between">
+<div class="flex items-center gap-3"><span class="font-mono text-xs text-yellow-500">e0b91d7</span><span class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-mono border border-blue-500/20">HEAD -&gt; main</span></div>
+<span class="font-mono text-[10px] text-gray-500">Vertis Solutions · Remoto</span>
+</div>
+<div class="p-6">
+<div class="lg:hidden mb-4 flex items-center gap-2 text-xs text-gray-500 font-mono"><i data-lucide="calendar" class="w-3 h-3"></i>set 2025 - atual</div>
+<h3 class="text-lg font-bold text-white mb-1 group-hover:text-orange-400 transition-colors">Analista de Qualidade Pleno II <span class="text-gray-500 font-normal text-sm">@ Vertis Solutions · Remoto</span></h3>
+<div class="mt-4 space-y-2 font-mono text-sm text-gray-400"><p class="leading-relaxed border-l-2 border-orange-500/20 pl-4 py-1">Planejamento e execução de testes, garantia da qualidade das entregas e atuação junto aos times de desenvolvimento.</p></div>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">QA</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Testes Funcionais</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Gestão de Defeitos</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="git-commit relative flex flex-col lg:flex-row items-center gap-10 lg:flex-row-reverse">
+<div class="hidden lg:flex w-1/2 justify-start">
+<div class="flex items-center gap-2 bg-[#191122] px-4 py-2 rounded-full border border-orange-500/20"><i data-lucide="calendar" class="w-3.5 h-3.5 text-orange-400"></i><span class="font-mono text-xs text-gray-400">2022 - 2025</span></div>
+</div>
+<div class="absolute left-8 lg:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10"><div class="w-4 h-4 rounded-full bg-dark-200 border-2 border-orange-500 relative ring-4 ring-dark-100"><div class="absolute inset-0 bg-orange-400 rounded-full opacity-20"></div></div></div>
+<div class="w-full lg:w-1/2 pl-12 lg:pl-0">
+<div class="relative group lg:mr-10">
+<div class="hidden lg:block absolute top-6 w-10 h-px bg-orange-500/30 -right-10"></div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 overflow-hidden hover:border-orange-500/30 transition-all duration-300 shadow-xl group-hover:shadow-2xl hover:-translate-y-1">
+<div class="bg-[#221a2e] px-4 py-2 border-b border-dark-300 flex items-center justify-between">
+<div class="flex items-center gap-3"><span class="font-mono text-xs text-yellow-500">f3a7c2d</span><span class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-mono border border-blue-500/20">developer</span></div>
+<span class="font-mono text-[10px] text-gray-500">Stefanini Brasil · Remoto</span>
+</div>
+<div class="p-6">
+<div class="lg:hidden mb-4 flex items-center gap-2 text-xs text-gray-500 font-mono"><i data-lucide="calendar" class="w-3 h-3"></i>2022 - 2025</div>
+<h3 class="text-lg font-bold text-white mb-1 group-hover:text-orange-400 transition-colors">Analista de Testes Pleno <span class="text-gray-500 font-normal text-sm">@ Stefanini Brasil · Remoto</span></h3>
+<div class="mt-4 space-y-2 font-mono text-sm text-gray-400"><p class="leading-relaxed border-l-2 border-orange-500/20 pl-4 py-1">Responsável pela qualidade de sistemas críticos: planejamento e execução de testes funcionais, casos de teste, relatórios de defeitos e acompanhamento em Kanban junto aos times de desenvolvimento.</p></div>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Testes Funcionais</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Casos de Teste</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Kanban</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Gestão de Defeitos</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="git-commit relative flex flex-col lg:flex-row items-center gap-10">
+<div class="hidden lg:flex w-1/2 justify-end">
+<div class="flex items-center gap-2 bg-[#191122] px-4 py-2 rounded-full border border-orange-500/20"><i data-lucide="calendar" class="w-3.5 h-3.5 text-orange-400"></i><span class="font-mono text-xs text-gray-400">2022</span></div>
+</div>
+<div class="absolute left-8 lg:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10"><div class="w-4 h-4 rounded-full bg-dark-200 border-2 border-orange-500 relative ring-4 ring-dark-100"><div class="absolute inset-0 bg-orange-400 rounded-full opacity-20"></div></div></div>
+<div class="w-full lg:w-1/2 pl-12 lg:pl-0">
+<div class="relative group lg:ml-10">
+<div class="hidden lg:block absolute top-6 w-10 h-px bg-orange-500/30 -left-10"></div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 overflow-hidden hover:border-orange-500/30 transition-all duration-300 shadow-xl group-hover:shadow-2xl hover:-translate-y-1">
+<div class="bg-[#221a2e] px-4 py-2 border-b border-dark-300 flex items-center justify-between">
+<div class="flex items-center gap-3"><span class="font-mono text-xs text-yellow-500">a1c4e09</span><span class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-mono border border-blue-500/20">developer</span></div>
+<span class="font-mono text-[10px] text-gray-500">Stefanini Brasil · Remoto</span>
+</div>
+<div class="p-6">
+<div class="lg:hidden mb-4 flex items-center gap-2 text-xs text-gray-500 font-mono"><i data-lucide="calendar" class="w-3 h-3"></i>2022</div>
+<h3 class="text-lg font-bold text-white mb-1 group-hover:text-orange-400 transition-colors">Analista de Testes Jr. <span class="text-gray-500 font-normal text-sm">@ Stefanini Brasil · Remoto</span></h3>
+<div class="mt-4 space-y-2 font-mono text-sm text-gray-400"><p class="leading-relaxed border-l-2 border-orange-500/20 pl-4 py-1">Primeiros passos em QA: elaboração e execução de casos de teste, registro de defeitos e apoio às rotinas de homologação das entregas.</p></div>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Homologação</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Casos de Teste</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">Scrum</span>
+<span class="px-2 py-1 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300 border border-orange-500/20">QA</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16 text-center relative z-10">
+<div class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#191122] border border-dark-300 text-xs font-mono text-gray-400 hover:text-orange-400 transition-colors hover:border-orange-500/50 cursor-pointer"><i data-lucide="git-commit-horizontal" class="w-4 h-4"></i><span>git init (2020 — estágio de engenharia na COGERA Energia)</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- projects — certifications & highlights (no public repos, so no repo list) -->
+<section class="min-h-screen py-20 px-6 lg:px-12" id="projects">
+<div class="max-w-6xl mx-auto">
+<div class="flex items-center gap-4 mb-12 animate-on-scroll" data-animate-on-scroll><i data-lucide="folder-open" class="w-6 h-6 text-orange-400"></i><h2 class="font-mono text-2xl lg:text-3xl font-bold"><span class="text-muted-foreground">$</span> ls -la ~/certificacoes</h2></div>
+
+<div class="flex items-center gap-2 mb-6 animate-on-scroll" data-animate-on-scroll><span class="text-sm font-semibold text-gray-400 uppercase tracking-widest pl-1">Certificações &amp; Cursos</span><div class="h-px bg-dark-300 flex-1"></div></div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-on-scroll" data-animate-on-scroll>
+
+<div class="project-card bg-[#191122] border border-dark-300 rounded-lg p-5 flex flex-col hover:border-orange-500/40 hover:shadow-lg transition-all group h-full">
+<div class="flex items-center gap-2 mb-3"><i data-lucide="shield-alert" class="w-4 h-4 text-orange-400"></i><span class="font-semibold text-orange-300 text-base">Segurança em TI</span></div>
+<p class="text-xs text-gray-400 leading-relaxed flex-1">Fundamentos de segurança da informação: superfícies de ataque, boas práticas de proteção e a base que sustenta a atuação ofensiva.</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Segurança</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Fundamentos</span>
+</div>
+</div>
+
+<div class="project-card bg-[#191122] border border-dark-300 rounded-lg p-5 flex flex-col hover:border-orange-500/40 hover:shadow-lg transition-all group h-full">
+<div class="flex items-center gap-2 mb-3"><i data-lucide="smartphone" class="w-4 h-4 text-orange-400"></i><span class="font-semibold text-orange-300 text-base">Flutter — Android &amp; iOS</span></div>
+<p class="text-xs text-gray-400 leading-relaxed flex-1">Desenvolvimento de aplicativos multiplataforma com Flutter e Dart, do design da interface à publicação nas duas lojas.</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Flutter</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Dart</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Mobile</span>
+</div>
+</div>
+
+<div class="project-card bg-[#191122] border border-dark-300 rounded-lg p-5 flex flex-col hover:border-orange-500/40 hover:shadow-lg transition-all group h-full">
+<div class="flex items-center gap-2 mb-3"><i data-lucide="wallet" class="w-4 h-4 text-orange-400"></i><span class="font-semibold text-orange-300 text-base">Projeto PicPay Pro</span></div>
+<p class="text-xs text-gray-400 leading-relaxed flex-1">Programa prático com desafios reais de produto e tecnologia, aplicando qualidade e boas práticas em um contexto de fintech.</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Fintech</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Produto</span>
+</div>
+</div>
+
+<div class="project-card bg-[#191122] border border-dark-300 rounded-lg p-5 flex flex-col hover:border-orange-500/40 hover:shadow-lg transition-all group h-full">
+<div class="flex items-center gap-2 mb-3"><i data-lucide="brain-circuit" class="w-4 h-4 text-orange-400"></i><span class="font-semibold text-orange-300 text-base">IA &amp; Cultura Digital</span></div>
+<p class="text-xs text-gray-400 leading-relaxed flex-1">Inteligência artificial no novo contexto da cultura digital — impactos, usos e limites da IA no dia a dia da tecnologia.</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">IA</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Cultura Digital</span>
+</div>
+</div>
+
+<div class="project-card bg-[#191122] border border-dark-300 rounded-lg p-5 flex flex-col hover:border-orange-500/40 hover:shadow-lg transition-all group h-full">
+<div class="flex items-center gap-2 mb-3"><i data-lucide="code" class="w-4 h-4 text-orange-400"></i><span class="font-semibold text-orange-300 text-base">Python</span></div>
+<p class="text-xs text-gray-400 leading-relaxed flex-1">Lógica de programação e automação com Python — a base para scripts de teste e ferramentas de apoio ao trabalho de QA.</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Python</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Automação</span>
+</div>
+</div>
+
+<div class="project-card bg-[#191122] border border-dark-300 rounded-lg p-5 flex flex-col hover:border-orange-500/40 hover:shadow-lg transition-all group h-full">
+<div class="flex items-center gap-2 mb-3"><i data-lucide="kanban" class="w-4 h-4 text-orange-400"></i><span class="font-semibold text-orange-300 text-base">Kanban &amp; Ágil</span></div>
+<p class="text-xs text-gray-400 leading-relaxed flex-1">Rotina de qualidade dentro de times ágeis: fluxo de trabalho em Kanban, priorização de defeitos e entregas contínuas.</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Kanban</span>
+<span class="text-[10px] text-orange-300/90 bg-orange-900/10 px-2 py-1 rounded-md border border-orange-500/10 font-mono">Ágil</span>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- formacao -->
+<section class="min-h-screen py-20 px-6 lg:px-12" id="formacao">
+<div class="max-w-6xl mx-auto">
+<div class="flex items-center gap-4 mb-12 animate-on-scroll" data-animate-on-scroll><i data-lucide="graduation-cap" class="w-6 h-6 text-orange-400"></i><h2 class="font-mono text-2xl lg:text-3xl font-bold"><span class="text-muted-foreground">$</span> cat formacao.md</h2></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-on-scroll" data-animate-on-scroll>
+<div class="bg-[#191122] rounded-lg border border-dark-300 overflow-hidden hover:border-orange-500/30 transition-all duration-300 shadow-xl hover:-translate-y-1 group">
+<div class="bg-[#221a2e] px-4 py-2 border-b border-dark-300 flex items-center justify-between">
+<div class="flex items-center gap-2 text-xs font-mono text-gray-400"><i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-orange-400"></i><span>graduacao.md</span></div>
+<span class="font-mono text-[10px] text-gray-500">2022</span>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-1 group-hover:text-orange-400 transition-colors">Bacharelado em Análise de Sistemas de Computação</h3>
+<p class="text-sm text-gray-500 font-mono mb-4">Universidade Católica Dom Bosco · Campo Grande - MS</p>
+<div class="font-mono text-sm text-gray-400"><p class="leading-relaxed border-l-2 border-orange-500/20 pl-4 py-1">Base em análise de sistemas, lógica de programação, banco de dados e engenharia de software.</p></div>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 overflow-hidden hover:border-blue-500/30 transition-all duration-300 shadow-xl hover:-translate-y-1 group">
+<div class="bg-[#221a2e] px-4 py-2 border-b border-dark-300 flex items-center justify-between">
+<div class="flex items-center gap-2 text-xs font-mono text-gray-400"><i data-lucide="shield" class="w-3.5 h-3.5 text-blue-400"></i><span>pos-qualidade.md</span></div>
+<span class="bg-green-500/10 text-green-400 px-2 py-0.5 rounded text-[10px] font-mono border border-green-500/20">CONCLUÍDA</span>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">Pós: Engenharia de Qualidade de Software</h3>
+<p class="text-sm text-gray-500 font-mono mb-4">Bookplay</p>
+<div class="font-mono text-sm text-gray-400"><p class="leading-relaxed border-l-2 border-blue-500/20 pl-4 py-1">Aprofundamento em estratégias de teste, automação e métricas de qualidade de software.</p></div>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 overflow-hidden hover:border-orange-500/30 transition-all duration-300 shadow-xl hover:-translate-y-1 group md:col-span-2">
+<div class="bg-[#221a2e] px-4 py-2 border-b border-dark-300 flex items-center justify-between">
+<div class="flex items-center gap-2 text-xs font-mono text-gray-400"><i data-lucide="shield-alert" class="w-3.5 h-3.5 text-orange-400"></i><span>pos-seguranca-ofensiva.md</span></div>
+<span class="bg-green-500/10 text-green-400 px-2 py-0.5 rounded text-[10px] font-mono border border-green-500/20">CONCLUÍDA</span>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-1 group-hover:text-orange-400 transition-colors">Pós: Segurança Ofensiva e Inteligência Cibernética</h3>
+<p class="text-sm text-gray-500 font-mono mb-4">Faculdade FACINT</p>
+<div class="font-mono text-sm text-gray-400"><p class="leading-relaxed border-l-2 border-orange-500/20 pl-4 py-1">Testes de intrusão, análise de vulnerabilidades e inteligência cibernética — pensar como quem ataca para proteger melhor.</p></div>
+</div>
+</div>
+</div>
+<div class="mt-8 animate-on-scroll" data-animate-on-scroll>
+<div class="flex items-center gap-2 mb-6"><i data-lucide="award" class="w-4 h-4 text-orange-400"></i><span class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Certificações e Cursos</span><div class="h-px bg-dark-300 flex-1"></div></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="bg-[#191122] rounded-lg border border-dark-300 p-4 flex items-start gap-3 hover:border-blue-500/40 transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 shrink-0 rounded-md bg-blue-500/10 border border-blue-500/20 flex items-center justify-center"><i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i></div>
+<div class="min-w-0">
+<h4 class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors leading-snug">Analista de Testes</h4>
+<p class="text-[11px] font-mono text-gray-500 mt-1">QA · 4 anos de atuação</p>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 p-4 flex items-start gap-3 hover:border-blue-500/40 transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 shrink-0 rounded-md bg-blue-500/10 border border-blue-500/20 flex items-center justify-center"><i data-lucide="lock" class="w-4 h-4 text-blue-400"></i></div>
+<div class="min-w-0">
+<h4 class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors leading-snug">Segurança em TI</h4>
+<p class="text-[11px] font-mono text-gray-500 mt-1">Fundamentos de segurança da informação</p>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 p-4 flex items-start gap-3 hover:border-orange-500/40 transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 shrink-0 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center"><i data-lucide="code" class="w-4 h-4 text-orange-400"></i></div>
+<div class="min-w-0">
+<h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors leading-snug">Flutter · Android &amp; iOS</h4>
+<p class="text-[11px] font-mono text-gray-500 mt-1">Desenvolvimento mobile multiplataforma</p>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 p-4 flex items-start gap-3 hover:border-orange-500/40 transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 shrink-0 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center"><i data-lucide="chart-line" class="w-4 h-4 text-orange-400"></i></div>
+<div class="min-w-0">
+<h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors leading-snug">Projeto PicPay Pro</h4>
+<p class="text-[11px] font-mono text-gray-500 mt-1">Programa prático de tecnologia</p>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 p-4 flex items-start gap-3 hover:border-orange-500/40 transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 shrink-0 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center"><i data-lucide="container" class="w-4 h-4 text-orange-400"></i></div>
+<div class="min-w-0">
+<h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors leading-snug">IA &amp; Cultura Digital</h4>
+<p class="text-[11px] font-mono text-gray-500 mt-1">Inteligência artificial aplicada</p>
+</div>
+</div>
+<div class="bg-[#191122] rounded-lg border border-dark-300 p-4 hover:border-orange-500/40 transition-all duration-300 hover:-translate-y-1 group">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 shrink-0 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center"><i data-lucide="layers" class="w-4 h-4 text-orange-400"></i></div>
+<div class="min-w-0">
+<h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors leading-snug">Linguagens &amp; Frameworks</h4>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">Dart</span>
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">Flutter</span>
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">Python</span>
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">SQL</span>
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">Jira</span>
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">Kanban</span>
+<span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-orange-500/5 text-orange-300/90 border border-orange-500/10">Scrum</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- contact -->
+<section class="min-h-screen flex items-center py-20 px-6 lg:px-12" id="contact">
+<div class="max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-4 mb-12 animate-on-scroll" data-animate-on-scroll><i data-lucide="mail" class="w-6 h-6 text-orange-400"></i><h2 class="font-mono text-2xl lg:text-3xl font-bold"><span class="text-muted-foreground">$</span> ./contact.exe</h2></div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mt-12">
+<div class="animate-on-scroll" data-animate-on-scroll>
+<div class="bg-[#191122] rounded-lg border border-dark-300 shadow-2xl overflow-hidden font-mono text-sm group transition-all duration-300 hover:border-orange-500/30">
+<div class="bg-[#221a2e] px-4 py-2 flex items-center justify-between border-b border-dark-300">
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-500/80"></div><div class="w-3 h-3 rounded-full bg-yellow-500/80"></div><div class="w-3 h-3 rounded-full bg-green-500/80"></div></div>
+<div class="text-gray-400 text-xs flex items-center gap-2"><i data-lucide="code-xml" class="w-3 h-3 text-blue-400"></i><span>contact_info.json</span></div>
+</div>
+<div class="p-6 overflow-x-auto relative">
+<div class="hidden sm:block absolute left-0 top-6 bottom-6 w-8 text-right pr-3 text-gray-700 select-none text-xs leading-6 font-mono border-r border-gray-800"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div></div>
+<div class="pl-6 leading-6">
+<div><span class="text-yellow-400">{</span></div>
+<div class="pl-4"><span class="text-orange-400">"status"</span>: <span class="text-green-400">"disponível"</span>,</div>
+<div class="pl-4"><span class="text-orange-400">"email"</span>: <a class="text-orange-300 hover:underline" href="mailto:geovana.bragafzys@gmail.com">"geovana.bragafzys@gmail.com"</a>,</div>
+<div class="pl-4"><span class="text-orange-400">"socials"</span>: <span class="text-yellow-400">{</span></div>
+<div class="pl-8"><span class="text-orange-400">"foco"</span>: <span class="text-green-400">"QA + Seguranca Ofensiva"</span>,</div>
+<div class="pl-8"><span class="text-orange-400">"linkedin"</span>: <a class="text-orange-300 hover:underline" href="https://www.linkedin.com/in/geovana-zys-039a48216" rel="noreferrer" target="_blank">"in/geovana-zys"</a></div>
+<div class="pl-4"><span class="text-yellow-400">}</span>,</div>
+<div class="pl-4"><span class="text-orange-400">"telefone"</span>: <a class="text-orange-300 hover:underline" href="https://wa.me/5567992236027" rel="noreferrer" target="_blank">"+55 67 99223-6027"</a>,</div>
+<div class="pl-4"><span class="text-orange-400">"location"</span>: <span class="text-orange-300">"Campo Grande - MS"</span></div>
+<div><span class="text-yellow-400">}</span></div>
+<div class="h-4"></div>
+<div class="text-gray-500 italic">// Alvo em observação — aguardando conexão...</div>
+<div class="text-orange-400 animate-pulse">_</div>
+</div>
+</div>
+</div>
+</div>
+<div class="animate-on-scroll" data-animate-on-scroll style="animation-delay:0.2s;">
+<div class="bg-[#191122] rounded-lg border border-dark-300 shadow-2xl overflow-hidden font-mono text-sm h-full flex flex-col group transition-all duration-300 hover:border-orange-500/30">
+<div class="bg-[#221a2e] flex text-xs border-b border-dark-300">
+<div class="bg-[#191122] px-4 py-2 text-gray-300 border-t-2 border-orange-400 flex items-center gap-2"><span class="text-blue-400 font-bold">TS</span><span>sendMessage.ts</span><span class="ml-2 hover:bg-white/10 rounded-full p-0.5 cursor-pointer">×</span></div>
+</div>
+<div class="p-6 relative flex-1">
+<form class="space-y-4">
+<div class="rounded-lg border border-[#a855f7]/20 bg-[#0f0b16]/70 overflow-hidden">
+<div class="flex items-center justify-between px-4 py-2 border-b border-[#a855f7]/20 bg-[#120d1a]">
+<div class="flex items-center gap-2 text-gray-300 font-mono text-xs"><i data-lucide="mail" class="w-3.5 h-3.5 text-orange-400"></i><span>mail.compose</span></div>
+<span class="text-[10px] font-mono text-gray-500">canal seguro</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 px-4 py-2 border-b border-[#a855f7]/10 bg-[#0d0a14]">
+<div class="text-[10px] font-mono text-gray-500"><span class="text-gray-400">para:</span> <span class="text-orange-300">geovana.bragafzys@gmail.com</span></div>
+<div class="text-[10px] font-mono text-gray-500 sm:text-right"><span class="text-gray-400">resposta:</span> <span class="text-emerald-300">em até 24h</span></div>
+</div>
+<div class="p-4 space-y-3">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="space-y-1"><label class="text-[10px] font-mono uppercase tracking-wide text-gray-500" for="contact-name">Nome</label><input class="w-full rounded border border-[#251d31] bg-[#181022] px-3 py-2 text-sm text-orange-200 placeholder-gray-600 focus:outline-none focus:border-orange-500/60" id="contact-name" name="name" placeholder="Seu Nome" required="" type="text" value=""/></div>
+<div class="space-y-1"><label class="text-[10px] font-mono uppercase tracking-wide text-gray-500" for="contact-email">E-mail</label><input class="w-full rounded border border-[#251d31] bg-[#181022] px-3 py-2 text-sm text-orange-200 placeholder-gray-600 focus:outline-none focus:border-orange-500/60" id="contact-email" name="email" placeholder="seu@email.com" required="" type="email" value=""/></div>
+</div>
+<div class="space-y-1"><label class="text-[10px] font-mono uppercase tracking-wide text-gray-500" for="contact-subject">Assunto</label><input class="w-full rounded border border-[#251d31] bg-[#181022] px-3 py-2 text-sm text-orange-200 placeholder-gray-600 focus:outline-none focus:border-orange-500/60" id="contact-subject" name="subject" placeholder="Consulta de projeto / Colaboração" type="text" value=""/></div>
+<div class="space-y-1"><label class="text-[10px] font-mono uppercase tracking-wide text-gray-500" for="contact-message">Mensagem</label><textarea class="w-full rounded border border-[#251d31] bg-[#181022] px-3 py-2 text-sm text-orange-200 placeholder-gray-600 focus:outline-none focus:border-orange-500/60 resize-none" id="contact-message" name="message" placeholder="Conte-me sobre seu projeto, prazo e objetivos..." required="" rows="5"></textarea></div>
+<div aria-hidden="true" class="hidden"><label for="website">Site</label><input autocomplete="off" id="website" name="website" tabindex="-1" type="text" value=""/></div>
+<div class="text-[11px] text-gray-500 font-mono">// Protegido por filtros de spam e limites de taxa</div>
+</div>
+</div>
+<div class="pt-2"><button class="flex items-center gap-2 px-5 py-2.5 bg-orange-500/20 text-orange-200 border border-orange-500/40 rounded hover:bg-orange-500/30 hover:text-white transition-all font-sans text-xs uppercase tracking-wider font-bold group w-full justify-center lg:w-auto shadow-[0_0_0_0_rgba(168,85,247,0)] hover:shadow-[0_0_20px_-8px_rgba(168,85,247,0.8)] disabled:opacity-50 disabled:cursor-not-allowed" type="submit"><i data-lucide="play" class="w-3.5 h-3.5 fill-current group-hover:scale-110 transition-transform"></i><span>Enviar Mensagem</span></button></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<footer class="mt-12 text-center animate-on-scroll" data-animate-on-scroll>
+<div class="flex items-center justify-center gap-2 mb-4"><i data-lucide="bug" class="w-5 h-5 text-orange-400"></i><span class="font-mono text-lg font-bold">Geovana Zys <span class="text-muted-foreground">|</span> QA &amp; Segurança Ofensiva</span></div>
+<p class="font-mono text-sm text-muted-foreground">Testes &amp; Segurança Ofensiva</p>
+<p class="font-mono text-xs text-muted-foreground mt-2">© 2026 Geovana Zys. Todos os direitos reservados.</p>
+</footer>
+</div>
+</section>
+
+</main>
+</div>
+
+<!-- floating-chat-button -->
+<a aria-label="Fale comigo no WhatsApp" href="https://wa.me/5567992236027?text=Ol%C3%A1%20Geovana!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." rel="noopener noreferrer" target="_blank" class="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 w-16 h-16 flex items-center justify-center cursor-pointer select-none">
+<div class="absolute inset-0 rounded-full border border-dashed border-[#a855f7]/60 animate-spin pointer-events-none" style="animation-duration:8s;"></div>
+<div class="absolute inset-1.25 rounded-full border border-[#a855f7]/30 pointer-events-none"></div>
+<span class="relative w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-[#0d0a14] border border-[#a855f7] shadow-[0_0_20px_rgba(168,85,247,0.4)]"><img src="assets/img/geovana.jpeg" alt="" width="40" height="40" loading="lazy" decoding="async" class="w-full h-full object-cover" style="object-position:50% 34%;"/></span>
+<span class="absolute top-1 right-1 w-3 h-3 rounded-full border-2 border-[#272033] bg-emerald-400"></span>
+</a>
+
+<!-- js -->
+<!-- Lucide runtime (vendored locally) — renders every <i data-lucide> placeholder into an inline SVG; deferred so it never blocks first paint -->
+<script defer src="assets/js/lucide.min.js"></script>
+<!-- interactions.js — Lucide init, terminal typewriter, scroll reveals, nav buttons, contact form; deferred to run after lucide, in order -->
+<script defer src="assets/js/interactions.js?v=4"></script>
+<!-- effects.js — decorative ambient effects: matrix code rain, compile progress bar, blueprint spine -->
+<script defer src="assets/js/cat-art.js?v=9"></script>
+<script defer src="assets/js/cat-rig.js?v=13"></script>
+<script defer src="assets/js/effects.js?v=22"></script>
+<!-- entrance.js — "compile sweep": gold scanline reveals the page when the build meter completes -->
+<script defer src="assets/js/entrance.js?v=2"></script>
+<!-- bats.js — gothic-cute flavour: bat cursor trail, ambient bats and the corner cat -->
+<script defer src="assets/js/bats.js?v=11"></script>
+<!-- skills-globe.js — Three.js CSS3D sphere of Devicon skill icons (slow auto-rotate + drag); uses the import map above -->
+<script type="module" src="assets/js/skills-globe.js?v=16"></script>
+</body>
+</html>

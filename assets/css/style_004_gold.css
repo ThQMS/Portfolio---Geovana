@@ -1,0 +1,4 @@
+.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}.hide-scrollbar::-webkit-scrollbar{display:none}.terminal-cursor{animation:1s step-end infinite blink}.skill-connection{stroke:#a855f733;stroke-width:1px}.hexagon-clip{clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}.text-glow{text-shadow:0 0 10px}.box-glow{box-shadow:0 0 20px #a855f74d}.gradient-text{background:linear-gradient(135deg,#a855f7 0%,#d8b4fe 100%);-webkit-text-fill-color:transparent;-webkit-background-clip:text;background-clip:text}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline-offset:2px;outline:2px solid #a855f7}@media print{.cursor-glow,.grid-bg{display:none!important}}
+
+/* no-ligatures: keep /> => etc. as separate glyphs in mono text (user preference) */
+.font-mono,.terminal{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}

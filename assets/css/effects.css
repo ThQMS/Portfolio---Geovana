@@ -1,0 +1,261 @@
+/* effects.css — ambient dev/architecture effects (all decorative, pointer-events:none).
+   Colours follow the site theme: gold #a855f7, wine #d946ef, near-black #0d0a14. */
+
+/* 1. The hunt — sits above the shell background, below all content. */
+#hunt-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* 2. Compile progress bar — thin gold build bar pinned to the very top. */
+#compile-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(168, 85, 247, 0.08);
+  z-index: 60;
+  pointer-events: none;
+}
+#compile-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #d946ef, #a855f7);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+  transition: width 0.1s linear;
+}
+#compile-pct {
+  position: fixed;
+  top: 9px;
+  right: 16px;
+  font: 11px/1 "Geist Mono", monospace;
+  letter-spacing: 0.06em;
+  color: #a855f7;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 60;
+  pointer-events: none;
+  text-shadow: 0 0 6px rgba(168, 85, 247, 0.4);
+}
+@media (max-width: 640px) {
+  #compile-pct { display: none; }
+}
+
+/* 3. Blueprint spine — a system-diagram trace that draws down the left gutter as you scroll (lg+). */
+#blueprint {
+  position: fixed;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  z-index: 5;
+  pointer-events: none;
+  display: none;
+}
+@media (min-width: 1024px) {
+  #blueprint { display: block; }
+}
+#blueprint .bp-track {
+  position: absolute;
+  left: 7px;
+  top: 8%;
+  bottom: 8%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.14) 12%, rgba(168, 85, 247, 0.14) 88%, transparent);
+}
+#blueprint .bp-fill {
+  position: absolute;
+  left: 7px;
+  top: 8%;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, #d946ef, #a855f7);
+  box-shadow: 0 0 7px rgba(168, 85, 247, 0.55);
+}
+#blueprint .bp-node {
+  position: absolute;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-50%) rotate(45deg);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: #0d0a14;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+#blueprint .bp-node.passed {
+  border-color: rgba(168, 85, 247, 0.5);
+}
+#blueprint .bp-node.active {
+  border-color: #a855f7;
+  background: #a855f7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #compile-fill { transition: none; }
+}
+
+/* ---- Mobile menu (hamburger + slide-in panel) ---- */
+#mobile-menu-toggle { display: none; }
+@media (max-width: 767px) {
+  #mobile-menu-toggle {
+    display: flex;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 60;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(26, 26, 26, 0.9);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    color: #a855f7;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+}
+/* ---- Language switch (PT / EN toggle) ---- */
+#lang-switch {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.9);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  font-family: "Geist Mono", monospace;
+}
+#lang-switch .lang-opt {
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #8b949e;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+#lang-switch .lang-opt:hover { color: #a855f7; }
+#lang-switch .lang-opt.is-active { background: #a855f7; color: #fff; }
+
+#mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+#mobile-menu.open { visibility: visible; opacity: 1; }
+#mobile-menu .mm-backdrop { position: absolute; inset: 0; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(3px); }
+#mobile-menu .mm-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(300px, 82%);
+  background: #120d1a;
+  border-left: 1px solid #262626;
+  box-shadow: -12px 0 44px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 18px;
+  padding-top: calc(22px + env(safe-area-inset-top));
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+  overflow-y: auto;
+}
+#mobile-menu.open .mm-panel { transform: translateX(0); }
+#mobile-menu .mm-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+#mobile-menu .mm-title { font-family: "Geist Mono", monospace; font-size: 13px; color: #a855f7; }
+#mobile-menu .mm-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #8b949e; background: transparent; border: 0; font-size: 18px; cursor: pointer; }
+#mobile-menu .mm-close:hover { color: #a855f7; }
+#mobile-menu .mm-link { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; text-align: left; color: #8b949e; background: transparent; border: 0; width: 100%; cursor: pointer; transition: color 0.2s ease, background 0.2s ease; }
+#mobile-menu .mm-link:hover, #mobile-menu .mm-link:active { color: #a855f7; background: rgba(168, 85, 247, 0.08); }
+#mobile-menu .mm-name { font-family: "Geist Mono", monospace; font-size: 14px; font-weight: 600; display: block; }
+#mobile-menu .mm-file { font-family: "Geist Mono", monospace; font-size: 10px; color: #4a5565; display: block; }
+@media (min-width: 768px) {
+  #mobile-menu, #mobile-menu-toggle { display: none !important; }
+}
+
+/* ---- Boot sequence overlay (pure CSS; JS only adds click-to-skip) ---- */
+#boot {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #080610;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* the compile-sweep entrance (entrance.js) drives the hide; effects.js keeps a safety fallback */
+}
+#boot .boot-inner {
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 13px;
+  line-height: 2;
+  color: #a855f7;
+  width: min(420px, 84%);
+  padding: 24px;
+}
+#boot .boot-line { opacity: 0; white-space: nowrap; animation: bootLine 0.16s ease forwards; }
+#boot .boot-line:nth-child(1) { animation-delay: 0.15s; }
+#boot .boot-line:nth-child(2) { animation-delay: 0.5s; }
+#boot .boot-line:nth-child(3) { animation-delay: 0.85s; }
+#boot .boot-line:nth-child(4) { animation-delay: 1.2s; }
+#boot .boot-line:nth-child(5) { animation-delay: 1.5s; }
+#boot .ok { color: #00c758; }
+#boot .boot-cur { animation: bootBlink 1s step-end infinite; }
+/* build meter: fills right before the compile sweep reveals the page */
+#boot .boot-build {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 10px; opacity: 0;
+  animation: bootLine 0.16s ease 1.75s forwards;
+}
+#boot .boot-bar {
+  flex: 1; height: 6px; border-radius: 3px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  overflow: hidden;
+}
+#boot .boot-bar-fill {
+  height: 100%; width: 0;
+  background: linear-gradient(90deg, #d946ef, #a855f7);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.65);
+  animation: bootBuild 0.62s ease-out 1.85s forwards;
+}
+#boot .boot-pct {
+  font-size: 11px; color: #a855f7; opacity: 0;
+  animation: bootLine 0.16s ease 2.42s forwards;
+}
+@keyframes bootBuild { to { width: 100%; } }
+#boot.boot-skip { animation: none; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease; }
+@keyframes bootLine { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes bootHide { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@keyframes bootBlink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #boot { display: none; } }
+
+/* ---- Ambient bats (canvas behind the content) ---- */
+#bats-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}

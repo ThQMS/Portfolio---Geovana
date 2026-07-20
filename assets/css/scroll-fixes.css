@@ -1,0 +1,19 @@
+/* Scroll fixes — MINIMAL SCOPE. Extracted from the inline <style data-scroll-fix> block.
+   Keeps the page vertically scrollable and hides any leftover loader/preloader overlays. */
+html,
+body {
+  overflow: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100% !important;
+  scroll-behavior: auto !important;
+}
+
+.loader,
+.preloader,
+.loading,
+[class*="loader"],
+[class*="preloader"] {
+  display: none !important;
+  opacity: 0 !important;
+}
