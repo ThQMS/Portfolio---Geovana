@@ -135,7 +135,7 @@
 
     var shell = document.querySelector(".min-h-screen");
     var DRAG = 40;                          // px the page is dragged in from behind the swarm
-    if (shell) {
+    if (desktop && shell) {
       shell.style.willChange = "transform";
       shell.style.transform = "translate3d(" + (-DRAG) + "px,0,0)";  // start pose, set now...
       void shell.offsetHeight;             // ...and force the layer promotion here, while the veil
@@ -210,7 +210,8 @@
 
       // The page settles in from behind the swarm, as if it were being dragged along.
       var eased = 1 - Math.pow(1 - p, 3);
-      if (shell && !done) {
+      if (desktop && shell && !done) {
+        // page-slide is desktop-only; on mobile there is no shell layer to move (or to demote)
         shell.style.transform = "translate3d(" + (-DRAG * (1 - eased)).toFixed(2) + "px,0,0)";
       }
 
