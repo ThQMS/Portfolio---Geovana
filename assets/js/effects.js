@@ -152,6 +152,7 @@
     var last = 0, prev = 0, nextSpawn = 0;
     function frame(t) {
       requestAnimationFrame(frame);
+      if (window.__entranceRunning) return;   // stay quiet while the intro sweep runs; it needs the main thread
       if (t - last < 33) return;
       var dt = prev ? Math.min(90, t - prev) : 33;
       last = t; prev = t;

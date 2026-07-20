@@ -814,7 +814,7 @@ function renderLightGlobe(mount) {
       }
       if (!drew) continue;
       var op = (band / (EDGE_BUCKETS - 1)) * 0.26;         // ~0.02 back → ~0.26 front, like desktop
-      wctx.strokeStyle = "rgba(212,175,55," + op.toFixed(3) + ")";
+      wctx.strokeStyle = "rgba(168,85,247," + op.toFixed(3) + ")";
       wctx.stroke();
     }
 

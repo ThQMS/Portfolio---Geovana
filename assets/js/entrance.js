@@ -101,6 +101,7 @@
     function cleanup() {
       if (cleaned) return;
       cleaned = true;
+      window.__entranceRunning = false;   // let the background animations resume
       veil.el.remove();
       swarm.el.remove();
       var sh = document.querySelector(".min-h-screen");
@@ -217,6 +218,7 @@
         // swarm layer fades.
         if (!done) {
           done = true;
+          window.__entranceRunning = false;   // reveal is complete — hand the thread back
           veil.el.remove();
           if (shell) { shell.style.transform = ""; shell.style.willChange = ""; }
         }

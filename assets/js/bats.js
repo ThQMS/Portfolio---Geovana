@@ -85,6 +85,7 @@
     var last = 0;
     function frame(t) {
       requestAnimationFrame(frame);
+      if (window.__entranceRunning) return;   // stay quiet while the intro sweep runs; it needs the main thread
       if (t - last < 28) return;                 // ~35fps
       last = t;
       ctx.clearRect(0, 0, W, H);
@@ -143,6 +144,7 @@
     var last = 0, MIN_DT = desktop ? 33 : 45;
     function frame(t) {
       requestAnimationFrame(frame);
+      if (window.__entranceRunning) return;   // stay quiet while the intro sweep runs; it needs the main thread
       if (t - last < MIN_DT) return;
       last = t;
       ctx.clearRect(0, 0, W, H);
