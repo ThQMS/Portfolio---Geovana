@@ -152,7 +152,10 @@
     var last = 0, prev = 0, nextSpawn = 0;
     function frame(t) {
       requestAnimationFrame(frame);
-      if (window.__entranceRunning) return;   // stay quiet while the intro sweep runs; it needs the main thread
+      // The hunt keeps running through the intro on purpose: the bats then reveal cats and tests
+      // already in motion, in place, the same way they reveal the page's text — instead of the
+      // scene popping in after the sweep. (The ambient bats + cursor trail stay paused; they are
+      // not what's being revealed and they were the heavier part of the contention.)
       if (t - last < 33) return;
       var dt = prev ? Math.min(90, t - prev) : 33;
       last = t; prev = t;

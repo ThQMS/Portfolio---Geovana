@@ -724,7 +724,7 @@ function renderLightGlobe(mount) {
   wire.className = "lg-wire";
   container.insertBefore(wire, container.firstChild);
   var wctx = wire.getContext("2d");
-  var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  var DPR = 1;   // 1 device-pixel is plenty for thin wireframe lines; halves the cage fill on dense phones
   // detail 2 is the desktop-matching dense cage (~480 edges); phones use detail 1 (~120), which is
   // the difference between a laggy drag and a smooth one.
   var geo = buildGeodesic(window.matchMedia("(min-width: 768px)").matches ? 2 : 1);
@@ -772,7 +772,9 @@ function renderLightGlobe(mount) {
   function frame(t) {
     requestAnimationFrame(frame);
     if (!onScreen || !pageVisible) return;  // idle while off-screen or in a background tab
-    if (!dragging && t - last < 33) return; // ~30fps idling; uncapped while dragging, so it tracks the finger
+    // Cap the rate even while dragging: moving 28 DOM icons every frame at 120Hz is what made
+    // rotation feel heavy on phones. ~45fps under the finger stays responsive; ~24fps idle.
+    if (t - last < (dragging ? 22 : 42)) return;
     last = t;
     if (!dragging) {
       angY += velY; angX += velX;

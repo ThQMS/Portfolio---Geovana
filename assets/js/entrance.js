@@ -77,8 +77,9 @@
 
     var W = window.innerWidth, H = window.innerHeight;
     var RES = desktop ? 1 : 0.8;
-
-    var veil = makeLayer(9999, W, H, RES);
+    var VEIL_RES = desktop ? 0.8 : 0.65;   // the veil is only a soft mask — lower res, cheaper carve,
+                                           // which offsets running the hunt during the reveal
+    var veil = makeLayer(9999, W, H, VEIL_RES);
     var swarm = makeLayer(10000, W, H, RES);
     if (!veil.ctx || !swarm.ctx) {
       veil.el.remove(); swarm.el.remove();
